@@ -1,0 +1,26 @@
+type SubAccount= vec nat8;
+type AccountBalanceArgs = record { account : SubAccount };
+type FoxICWallet = record {
+  transaction_fee : Tokens;
+  subaccount : opt SubAccount;
+  ledger_canister : principal;
+};
+type Result = variant { Ok : nat64; Err : text };
+type SendArgsSimple = record { account_id : text; amount : Tokens };
+type Tokens = record { e8s : nat64 };
+type TransferArgs = record {
+  sub_account_to : opt SubAccount;
+  principal_to : principal;
+  amount : Tokens;
+};
+service : (opt FoxICWallet) -> {
+  get_owner : () -> (text) query;
+  greeting : (text) -> (text) query;
+  is_owner : () -> (bool) query;
+  set_owner : (principal) -> ();
+  wallet_address_get : (opt SubAccount) -> (text) query;
+  wallet_balance_get : (opt AccountBalanceArgs) -> (Tokens);
+  wallet_icp_send : (SendArgsSimple) -> (Result);
+  wallet_icp_transfer : (TransferArgs) -> (Result);
+  wallet_url_get : () -> (text) query;
+}

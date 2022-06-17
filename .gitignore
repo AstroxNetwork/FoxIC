@@ -1,0 +1,50 @@
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# Mac OSX temporary files
+.DS_Store
+
+# dfx temporary files
+.dfx/
+
+# frontend code
+
+node_modules/
+dist/
+lib
+
+# Cargo build output
+target/
+
+# Test
+snapshots/
+
+# Various IDEs and Editors
+**/.vscode/
+**/.idea/
+**/*~
+**/.pnpm-*.*
+
+# Mac OSX temporary files
+**/.DS_Store
+
+# dfx temporary files
+**/.dfx/
+
+# frontend code
+**/node_modules/
+**/dist/
+**/lib
+
+# Cargo build output
+**/target/
+
+# Test
+snapshots/
+
+credentials/*.txt
+
+# 
+**/.idea/

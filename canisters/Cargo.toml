@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "foxic_wallet",
+    "foxic_factory",
+    "foxic_helpers"
+]
+
+[profile.release]
+lto = true
+opt-level = 'z'

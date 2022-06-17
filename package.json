@@ -1,0 +1,36 @@
+{
+  "name": "foxic",
+  "private": true,
+  "author": "AstroX <dev@astrox.network>",
+  "license": "(Apache-2.0 AND MIT)",
+  "scripts": {
+    "canisters:build": "node ./dist/scripts/builder.js",
+    "canisters:build:idl": "node ./dist/scripts/builder.js --idl",
+    "canisters:deploy": "node ./dist/scripts/deployer.js --clean",
+    "canisters:upgrade": "node ./dist/scripts/deployer.js",
+    "canisters:script": "swc ./scripts -d dist/scripts",
+    "canisters:run": "pnpm run canisters:script && pnpm run canisters:build && pnpm run canisters:deploy"
+  },
+  "dependencies": {
+    "@dfinity/agent": "^0.11.3",
+    "@dfinity/candid": "^0.11.3",
+    "@dfinity/identity": "^0.11.3",
+    "@dfinity/principal": "^0.11.3",
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.141",
+    "@swc/jest": "^0.2.20",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.18",
+    "@types/shelljs": "^0.8.11",
+    "@types/yargs": "^17.0.10",
+    "bip32": "^3.0.1",
+    "bip39": "^3.0.4",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "cross-fetch": "^3.1.5",
+    "shelljs": "^0.8.5",
+    "tiny-secp256k1": "^2.2.1",
+    "tslib": "^2.3.1",
+    "yargs": "^17.3.1"
+  }
+}
