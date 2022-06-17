@@ -1,4 +1,4 @@
-# ICSnap
+# FoxIC
 
 ## How it works
 
