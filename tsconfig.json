@@ -31,11 +31,7 @@
         "./@types"
       ]
     },
-    "references": [
-      { "path": "packages/types" },
-      { "path": "packages/snap" },
-      { "path": "packages/adapter" },
-    ],
+    "references": [],
     "exclude": [
       "packages/example/vite.config.ts",
       "packages/example/tsconfig.json",

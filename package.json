@@ -4,12 +4,13 @@
   "author": "AstroX <dev@astrox.network>",
   "license": "(Apache-2.0 AND MIT)",
   "scripts": {
-    "canisters:build": "node ./dist/scripts/builder.js",
-    "canisters:build:idl": "node ./dist/scripts/builder.js --idl",
+    "canisters:build": "node ./dist/scripts/builder.js && pnpm run format:idl",
+    "canisters:build:idl": "node ./dist/scripts/builder.js --idl && pnpm run format:idl",
     "canisters:deploy": "node ./dist/scripts/deployer.js --clean",
     "canisters:upgrade": "node ./dist/scripts/deployer.js",
     "canisters:script": "swc ./scripts -d dist/scripts",
-    "canisters:run": "pnpm run canisters:script && pnpm run canisters:build && pnpm run canisters:deploy"
+    "canisters:run": "pnpm run canisters:script && pnpm run canisters:build && pnpm run canisters:deploy",
+    "format:idl": "prettier --write clients/idls/**/*.{js,ts}"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.3",
@@ -28,6 +29,7 @@
     "concurrently": "^7.1.0",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.5",
+    "prettier": "^2.7.1",
     "shelljs": "^0.8.5",
     "tiny-secp256k1": "^2.2.1",
     "tslib": "^2.3.1",
