@@ -12,6 +12,7 @@ export const idlFactory = ({ IDL }) => {
     Released: IDL.Null,
   });
   const Canister = IDL.Record({
+    controller: IDL.Opt(IDL.Principal),
     status: IDL.Opt(CanisterStatus),
     canister_id: IDL.Principal,
   });
@@ -23,6 +24,7 @@ export const idlFactory = ({ IDL }) => {
     add_owner: IDL.Func([IDL.Principal], [], []),
     factory_wallet_install: IDL.Func([], [Result], []),
     factory_wallet_upload: IDL.Func([IDL.Vec(IDL.Nat8)], [], []),
+    get_wallet: IDL.Func([], [IDL.Opt(Canister)], ['query']),
     greeting: IDL.Func([IDL.Text], [IDL.Text], ['query']),
     is_owner: IDL.Func([], [IDL.Bool], ['query']),
     set_conf: IDL.Func([FoxICFactory], [], []),

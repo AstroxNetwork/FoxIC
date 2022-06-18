@@ -30,14 +30,23 @@ describe('foxic factory test', () => {
   });
 
   test('install wallet wasm', async () => {
-    const uploadResult = await factory?.factory_wallet_install();
-    if (uploadResult && hasOwnProperty(uploadResult, 'Ok')) {
-      const { controller, canister_id } = uploadResult.Ok;
-      wallet_canister = canister_id;
+    const hasWallet = await factory?.get_wallet();
+    if (hasWallet && hasWallet.length === 0) {
+      const uploadResult = await factory?.factory_wallet_install();
+      if (uploadResult && hasOwnProperty(uploadResult, 'Ok')) {
+        const { controller, canister_id } = uploadResult.Ok;
+        wallet_canister = canister_id;
 
+        wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
+
+        expect(identity.getPrincipal().toText()).toBe(controller.toText());
+      }
+    } else if (hasWallet && hasWallet.length === 1) {
+      wallet_canister = hasWallet[0].canister_id;
       wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
-
-      expect(identity.getPrincipal().toText()).toBe(controller.toText());
+      expect(identity.getPrincipal().toText()).toBe(
+        hasWallet[0].controller[0]!.toText(),
+      );
     }
   });
 
