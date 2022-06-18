@@ -1,0 +1,37 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+    "gen:foxic_factory:types": "didc bind ../../canisters/foxic_factory/foxic_factory.did -t ts > ./src/candid/foxic_factory.d.ts",
+    "gen:foxic_factory:js": "didc bind ../../canisters/foxic_factory/foxic_factory.did -t js > ./src/candid/foxic_factory.idl.js",
+    "gen:foxic_wallet:types": "didc bind ../../canisters/foxic_wallet/foxic_wallet.did -t ts > ./src/candid/foxic_wallet.d.ts",
+    "gen:foxic_wallet:js": "didc bind ../../canisters/foxic_wallet/foxic_wallet.did -t js > ./src/candid/foxic_wallet.idl.js"
+  },
+  "dependencies": {
+    "@astrox/icsnap": "^0.0.2",
+    "@astrox/icsnap-adapter": "^0.0.1",
+    "@astrox/icsnap-types": "^0.0.1",
+    "@dfinity/agent": "0.11.0",
+    "@dfinity/auth-client": "0.11.0",
+    "@dfinity/authentication": "0.11.0",
+    "@dfinity/candid": "0.11.0",
+    "@dfinity/identity": "0.11.0",
+    "@dfinity/principal": "0.11.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@vitejs/plugin-react-refresh": "^1.3.6",
+    "buffer": "^6.0.3",
+    "typescript": "^4.4.3",
+    "vite": "^2.5.7"
+  }
+}
