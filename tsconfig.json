@@ -1,40 +1,52 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-      "target": "es2017",
-      "lib": ["es2017","dom"],
-      "allowSyntheticDefaultImports": true,
-      "composite": true,
-      "declarationMap": true,
-      "downlevelIteration": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "forceConsistentCasingInFileNames": true,
-      "moduleResolution": "node",
-      "module": "commonjs",
-      "pretty": true,
-      "sourceMap": true,
-      "declaration": true,
-      "outDir": "build",
-      "allowJs": true,
-      "noEmit": false,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "importHelpers": true,
-      "baseUrl": "scripts",
-      "paths": {
-        "@canisters":["packages/canisters/*"]
-      },
-      "typeRoots": [
-        "./node_modules/@types",
-        "./@types"
-      ]
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2019", "DOM"],
+    "strict": true,
+    "module": "commonjs", //ii
+    "target": "es2018", //ii
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "outDir": "/",
+    "importHelpers": true,
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "baseUrl": "./",
+    "paths": {
+      // "src$/*": ["src/frontend/src/*"],
+      "@idls/*":["clients/idls/*"],
+      "@tests/*":["clients/tests/*"],
+      "@/*": ["clients/*"]
     },
-    "references": [],
-    "exclude": [
-      "packages/example/vite.config.ts",
-      "packages/example/tsconfig.json",
-    ]
-  }
-  
+    "noImplicitAny": false,
+    "downlevelIteration": true
+  },
+  "include": [
+    "clients/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "dist",
+    "typings",
+    "**/__test__",
+    "test",
+    "docs",
+    "tests",
+    "src/**/*.test.ts",
+    "src/frontend/generated",
+    "src/frontend/src/component/iconfont",
+    "**/canisters",
+    "webpack.config.js",
+    "*.js",
+    "scripts/deployer.js"
+  ]
+}

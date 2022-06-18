@@ -10,7 +10,8 @@
     "canisters:upgrade": "node ./dist/scripts/deployer.js",
     "canisters:script": "swc ./scripts -d dist/scripts",
     "canisters:run": "pnpm run canisters:script && pnpm run canisters:build && pnpm run canisters:deploy",
-    "format:idl": "prettier --write clients/idls/**/*.{js,ts}"
+    "format:idl": "prettier --write clients/idls/**/*.{js,ts}",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.3",

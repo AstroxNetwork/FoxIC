@@ -1,1 +1,10 @@
-service : { greeting : (text) -> (text) query }
+type Result = variant { Ok : WalletInstallResponse; Err : text };
+type WalletInstallResponse = record {
+  controller : principal;
+  canister_id : principal;
+};
+service : () -> {
+  factory_wallet_install : () -> (Result);
+  factory_wallet_upload : (vec nat8) -> ();
+  greeting : (text) -> (text) query;
+}

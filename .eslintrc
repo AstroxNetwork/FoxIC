@@ -14,5 +14,17 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-var-requires": "off"
-  }
+  },
+  "ignorePatterns": [
+    "src/**/*.test.ts",
+    "src/frontend/generated/*",
+    "webpack.config.js",
+    "tsconfig.json",
+    "scripts/*",
+    "ego_clients/**/modern-app-env.d.ts",
+    "jest.config.js"
+  ]
 }
+
+
+
