@@ -35,7 +35,11 @@ export const idlFactory = ({ IDL }) => {
     is_owner: IDL.Func([], [IDL.Bool], ['query']),
     set_conf: IDL.Func([FoxICWallet], [], []),
     set_owner: IDL.Func([IDL.Principal], [], []),
-    wallet_address_get: IDL.Func([IDL.Opt(IDL.Vec(IDL.Nat8))], [IDL.Text], ['query']),
+    wallet_address_get: IDL.Func(
+      [IDL.Opt(IDL.Vec(IDL.Nat8))],
+      [IDL.Text],
+      ['query'],
+    ),
     wallet_balance_get: IDL.Func([IDL.Opt(AccountBalanceArgs)], [Tokens], []),
     wallet_icp_send: IDL.Func([SendArgsSimple], [Result], []),
     wallet_icp_transfer: IDL.Func([TransferArgs], [Result], []),

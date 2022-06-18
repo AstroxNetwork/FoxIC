@@ -10,7 +10,6 @@
 .dfx/
 
 # frontend code
-
 node_modules/
 dist/
 lib
@@ -25,7 +24,6 @@ snapshots/
 **/.vscode/
 **/.idea/
 **/*~
-**/.pnpm-*.*
 
 # Mac OSX temporary files
 **/.DS_Store
@@ -41,10 +39,19 @@ snapshots/
 # Cargo build output
 **/target/
 
+
 # Test
 snapshots/
 
 credentials/*.txt
+clients/idls/**/*.ts
+clients/idls/**/*.js
 
-# 
-**/.idea/
+# canisters/
+canisters/**/*.wasm
+canisters/**/Cargo.lock
+canisters/**/*.auto.did
+
+# configs
+configs/*.json
+!configs/constant.json
