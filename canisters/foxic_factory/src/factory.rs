@@ -168,6 +168,7 @@ impl FoxICFactory {
                             request.controller.clone(),
                             Canister {
                                 canister_id: create_result.canister_id.clone(),
+                                controller: Some(request.controller.clone()),
                                 status: Some(CanisterStatus::Released),
                             },
                         );
@@ -184,7 +185,7 @@ impl FoxICFactory {
         }
     }
 
-    pub async fn get_wallet(&self, controller: Principal) -> Option<Canister> {
+    pub fn get_wallet(&self, controller: Principal) -> Option<Canister> {
         match self.holders.get(&controller) {
             None => None,
             Some(r) => Some(r.clone()),

@@ -1,6 +1,6 @@
 use crate::factory::FoxICFactory;
 use crate::state::{owner_guard, CONF, MANAGER_LIST};
-use crate::types::{WalletInstallRequest, WalletInstallResponse};
+use crate::types::{Canister, WalletInstallRequest, WalletInstallResponse};
 use candid::candid_method;
 use ic_cdk::caller;
 use ic_cdk_macros::*;
@@ -37,6 +37,12 @@ pub fn add_owner(owner: Principal) {
 #[candid_method(query, rename = "is_owner")]
 pub fn is_owner() -> bool {
     MANAGER_LIST.with(|o| o.borrow().iter().contains(&caller()))
+}
+
+#[query(name = "get_wallet")]
+#[candid_method(query, rename = "get_wallet")]
+pub fn get_wallet() -> Option<Canister> {
+    CONF.with(|c| c.borrow().get_wallet(caller()))
 }
 
 /// async function getting balance

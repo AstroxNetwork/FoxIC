@@ -1,4 +1,8 @@
-type Canister = record { status : opt CanisterStatus; canister_id : principal };
+type Canister = record {
+  controller : opt principal;
+  status : opt CanisterStatus;
+  canister_id : principal;
+};
 type CanisterStatus = variant { Closed; Released };
 type FoxICFactory = record {
   wallet_wasm : vec nat8;
@@ -13,6 +17,7 @@ service : () -> {
   add_owner : (principal) -> ();
   factory_wallet_install : () -> (Result);
   factory_wallet_upload : (vec nat8) -> ();
+  get_wallet : () -> (opt Canister) query;
   greeting : (text) -> (text) query;
   is_owner : () -> (bool) query;
   set_conf : (FoxICFactory) -> ();

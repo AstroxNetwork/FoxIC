@@ -17,6 +17,7 @@ pub struct SendCyclesArgs<TCycles> {
 #[derive(Clone, Debug, CandidType, Deserialize, Serialize, Eq, PartialEq)]
 pub struct Canister {
     pub canister_id: Principal,
+    pub controller: Option<Principal>,
     pub status: Option<CanisterStatus>,
 }
 
