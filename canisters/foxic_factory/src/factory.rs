@@ -1,7 +1,7 @@
 // use crate::state::WALLET;
-use ic_cdk::api;
 use ic_cdk::export::candid::{CandidType, Nat};
 use ic_cdk::export::Principal;
+use ic_cdk::{api, id};
 use itertools::Itertools;
 use serde::Deserialize;
 use std::collections::{BTreeMap, HashMap};
@@ -70,7 +70,7 @@ async fn _create_canister_call(args: CreateCanisterArgs<u128>) -> Result<CreateR
         Ok(x) => x,
         Err((code, msg)) => {
             return Err(format!(
-                "An error happened during the call: {}: {}",
+                "An error happened during the _create_canister_call: {}: {}",
                 code as u8, msg
             ));
         }
@@ -117,7 +117,7 @@ async fn _install_wallet(canister_id: &Principal, wasm_module: Vec<u8>) -> Resul
         Ok(x) => x,
         Err((code, msg)) => {
             return Err(format!(
-                "An error happened during the call: {}: {}",
+                "An error happened during the _install_wallet: {}: {}",
                 code as u8, msg
             ));
         }
@@ -137,12 +137,16 @@ impl FoxICFactory {
         &mut self,
         request: WalletInstallRequest,
     ) -> Result<WalletInstallResponse, String> {
+        if self.holders.get(&request.controller.clone()).is_some() {
+            ic_cdk::trap("Each caller can only have one wallet, Truly Sorry!!");
+        }
+
         let default_cycles = 200_000_000_000 as u128;
         let create_canister_arg = CreateCanisterArgs {
             cycles: request.cycles.unwrap_or(default_cycles).clone() as u128,
             settings: CanisterSettings {
                 controller: None,
-                controllers: Some(vec![request.controller]),
+                controllers: Some(vec![request.controller.clone(), id()]),
                 compute_allocation: None,
                 memory_allocation: None,
                 freezing_threshold: None,
@@ -152,18 +156,29 @@ impl FoxICFactory {
 
         match _install_wallet(&create_result.canister_id, self.wallet_wasm.clone()).await {
             Ok(_) => {
-                self.holders.insert(
-                    request.controller.clone(),
-                    Canister {
-                        canister_id: create_result.canister_id.clone(),
-                        status: Some(CanisterStatus::Released),
-                    },
-                );
+                match api::call::call(
+                    create_result.canister_id.clone(),
+                    "set_owner",
+                    (request.controller.clone(),),
+                )
+                .await as Result<((),), _>
+                {
+                    Ok(_) => {
+                        self.holders.insert(
+                            request.controller.clone(),
+                            Canister {
+                                canister_id: create_result.canister_id.clone(),
+                                status: Some(CanisterStatus::Released),
+                            },
+                        );
 
-                Ok(WalletInstallResponse {
-                    canister_id: create_result.canister_id.clone(),
-                    controller: request.controller,
-                })
+                        Ok(WalletInstallResponse {
+                            canister_id: create_result.canister_id.clone(),
+                            controller: request.controller.clone(),
+                        })
+                    }
+                    Err(_) => Err("Set owner result".to_string()),
+                }
             }
             Err(e) => Err(e),
         }

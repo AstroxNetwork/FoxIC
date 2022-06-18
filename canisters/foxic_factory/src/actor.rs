@@ -1,20 +1,42 @@
-use crate::state::{owner_guard, CANISTER_OWNER, CONF};
+use crate::factory::FoxICFactory;
+use crate::state::{owner_guard, CONF, MANAGER_LIST};
 use crate::types::{WalletInstallRequest, WalletInstallResponse};
 use candid::candid_method;
 use ic_cdk::caller;
 use ic_cdk_macros::*;
+use ic_types::Principal;
+use itertools::Itertools;
+use std::borrow::BorrowMut;
 use std::ops::Deref;
 
 #[init]
 #[candid_method(init)]
 fn init() {
-    CANISTER_OWNER.with(|o| o.replace(caller()));
+    MANAGER_LIST.with(|o| o.borrow_mut().push(caller()));
 }
 
 #[query(name = "greeting")]
 #[candid_method(query, rename = "greeting")]
 pub fn greeting(greet: String) -> String {
     format!("hello back from rust: {}", greet.as_str()).to_string()
+}
+
+#[update(name = "set_conf", guard = "owner_guard")]
+#[candid_method(update, rename = "set_conf")]
+pub fn set_conf(conf: FoxICFactory) {
+    CONF.with(|c| c.replace(conf));
+}
+
+#[update(name = "add_owner", guard = "owner_guard")]
+#[candid_method(update, rename = "add_owner")]
+pub fn add_owner(owner: Principal) {
+    MANAGER_LIST.with(|o| o.borrow_mut().push(owner.clone()))
+}
+
+#[query(name = "is_owner")]
+#[candid_method(query, rename = "is_owner")]
+pub fn is_owner() -> bool {
+    MANAGER_LIST.with(|o| o.borrow().iter().contains(&caller()))
 }
 
 /// async function getting balance

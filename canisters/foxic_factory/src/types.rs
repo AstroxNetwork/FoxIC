@@ -35,5 +35,5 @@ pub struct WalletInstallResponse {
 #[derive(CandidType, Deserialize)]
 pub(crate) struct StableStorage {
     pub(crate) factory: FoxICFactory,
-    pub(crate) owner: Principal,
+    pub(crate) manager_list: Vec<Principal>,
 }
