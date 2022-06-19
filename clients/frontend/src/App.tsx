@@ -1,12 +1,12 @@
 import React, { useEffect } from "react"
-import { Auth } from "./Auth"
+// import { Auth } from "./Auth"
 import { Intro } from "./Intro"
-import { connection } from "./services/connection"
+// import { connection } from "./services/connection"
 
 function App() {
   useEffect(() => {
     init()
-  },[])
+  }, [])
   const init = async () => {
     // await connection.actor.greeting('1')
   }

@@ -12,9 +12,9 @@
     "gen:foxic_wallet:js": "didc bind ../../canisters/foxic_wallet/foxic_wallet.did -t js > ./src/candid/foxic_wallet.idl.js"
   },
   "dependencies": {
-    "@astrox/icsnap": "^0.0.4",
-    "@astrox/icsnap-adapter": "^0.0.4",
-    "@astrox/icsnap-types": "^0.0.4",
+    "@astrox/icsnap": "^0.0.9",
+    "@astrox/icsnap-adapter": "^0.0.9",
+    "@astrox/icsnap-types": "^0.0.9",
     "@dfinity/agent": "0.11.3",
     "@dfinity/auth-client": "0.11.3",
     "@dfinity/authentication": "0.11.3",
@@ -22,8 +22,10 @@
     "@dfinity/identity": "0.11.3",
     "@dfinity/principal": "0.11.3",
     "prettier": "^2.7.1",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-lottie": "^1.2.3",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
