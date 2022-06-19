@@ -43,10 +43,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
   }, [factoryConnect])
 
   const signMessage = async () => {
-    console.log('identity', identity)
-    console.log('identity', identity.signRawMessage)
     const signed = await identity.signRawMessage(message!)
-    console.log({ signed })
     setSignedMessage(signed)
   }
 
@@ -54,7 +51,6 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
     setCreateLoading(true)
     try {
       const uploadResult = await factoryConnect.actor?.factory_wallet_install()
-      console.log(uploadResult)
       if (uploadResult && hasOwnProperty(uploadResult, "Ok")) {
         const { controller, canister_id } = uploadResult.Ok
         setWalletCanister(canister_id)
@@ -66,17 +62,15 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
         console.warn(uploadResult)
       }
     } catch (error) {
-      console.log("install error", error)
+      console.error("install error", error)
       setCreateLoading(false)
     }
   }
 
   const initWallet = async () => {
-    console.log("factoryConnect", factoryConnect)
     if (factoryConnect) {
       try {
         const resWallets = await factoryConnect.actor?.get_wallet()
-        console.log(resWallets)
         if (resWallets && resWallets.length > 0 && resWallets[0]) {
           const { canister_id, controller } = resWallets[0]
           setWalletCanister(canister_id)
@@ -86,7 +80,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
           setWalletConnect(res)
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -112,7 +106,10 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
           <h2>Principal ID</h2>
           <div className="flex" style={{ marginBottom: 30 }}>
             <p className="c_grey">{identity?.getPrincipal().toText()}</p>
-            <Copy text={identity?.getPrincipal().toText()} content={<a className="c_brand">COPY</a>} />
+            <Copy
+              text={identity?.getPrincipal().toText()}
+              content={<a className="c_brand">COPY</a>}
+            />
           </div>
           <input
             aria-label="To Sign a message"

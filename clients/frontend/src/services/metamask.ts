@@ -16,7 +16,6 @@ export async function initiateICPSnap(): Promise<SnapInitializationResponse> {
   const snapId = defaultSnapId
   try {
     console.log("Attempting to connect to snap...")
-
     const metamaskICPSnap = await enableICPSnap({ network: "local" }, snapId, {
       version: "latest",
     })

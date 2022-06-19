@@ -56,55 +56,63 @@ function runDeploy() {
     ).clean,
   );
   for (const f of config) {
-    const dfx_folder = process.cwd() + '/' + f.category + '/' + f.package;
-    // const dfx_sh = dfx_folder + '/dfx.sh';
-    if (
-      (
-        argv as {
-          [x: string]: unknown;
-          clean: boolean;
-          _: (string | number)[];
-          $0: string;
+    if (!f.no_deploy) {
+      const dfx_folder = process.cwd() + '/' + f.category + '/' + f.package;
+      // const dfx_sh = dfx_folder + '/dfx.sh';
+      if (
+        (
+          argv as {
+            [x: string]: unknown;
+            clean: boolean;
+            _: (string | number)[];
+            $0: string;
+          }
+        ).clean
+      ) {
+        if (f.private !== undefined) {
+          const prv = file.readFileSync(dfx_folder + '/' + f.private);
+          const pub = file.readFileSync(dfx_folder + '/' + f.public);
+          file.writeFileSync(dfx_folder + '/dfx.json', prv);
+          shell.exec(`cd ${dfx_folder} && rm -rf .dfx && sh dfx.sh`);
+          file.writeFileSync(dfx_folder + '/dfx.json', pub);
+        } else {
+          shell.exec(`cd ${dfx_folder} && rm -rf .dfx && sh dfx.sh`);
         }
-      ).clean
-    ) {
-      if (f.private !== undefined) {
-        const prv = file.readFileSync(dfx_folder + '/' + f.private);
-        const pub = file.readFileSync(dfx_folder + '/' + f.public);
-        file.writeFileSync(dfx_folder + '/dfx.json', prv);
-        shell.exec(`cd ${dfx_folder} && rm -rf .dfx && sh dfx.sh`);
-        file.writeFileSync(dfx_folder + '/dfx.json', pub);
       } else {
-        shell.exec(`cd ${dfx_folder} && rm -rf .dfx && sh dfx.sh`);
+        shell.exec(`cd ${dfx_folder} && sh dfx.sh`);
       }
-    } else {
-      shell.exec(`cd ${dfx_folder} && sh dfx.sh`);
+
+      shell.exec(
+        `cd ${dfx_folder} && dfx canister update-settings --all --add-controller "${identity
+          .getPrincipal()
+          .toText()}"`,
+      );
+
+      const localCanisterJson = file
+        .readFileSync(dfx_folder + '/.dfx/local/canister_ids.json')
+        .toString('utf8');
+      const localCanisterId = JSON.parse(localCanisterJson)[f.package]['local'];
+
+      let configJson = JSON.stringify({});
+      try {
+        configJson = file.readFileSync(f.config).toString('utf8');
+      } catch (error) {
+        file.writeFileSync(f.config, JSON.stringify({}));
+      }
+
+      const configObject = {
+        ...JSON.parse(configJson),
+        LOCAL_CANISTERID: localCanisterId,
+      };
+
+      if (f.url) {
+        Object.assign(configObject, {
+          LOCAL_URL: `http://${localCanisterId}.localhost:8000`,
+        });
+      }
+
+      file.writeFileSync(f.config, JSON.stringify(configObject));
     }
-
-    shell.exec(`cd ${dfx_folder} && dfx canister update-settings --all --add-controller "${identity.getPrincipal().toText()}"`);
-
-    const localCanisterJson = file.readFileSync(dfx_folder + '/.dfx/local/canister_ids.json').toString('utf8');
-    const localCanisterId = JSON.parse(localCanisterJson)[f.package]['local'];
-
-    let configJson = JSON.stringify({});
-    try {
-      configJson = file.readFileSync(f.config).toString('utf8');
-    } catch (error) {
-      file.writeFileSync(f.config, JSON.stringify({}));
-    }
-
-    const configObject = {
-      ...JSON.parse(configJson),
-      LOCAL_CANISTERID: localCanisterId,
-    };
-
-    if (f.url) {
-      Object.assign(configObject, {
-        LOCAL_URL: `http://${localCanisterId}.localhost:8000`,
-      });
-    }
-
-    file.writeFileSync(f.config, JSON.stringify(configObject));
   }
 }
 

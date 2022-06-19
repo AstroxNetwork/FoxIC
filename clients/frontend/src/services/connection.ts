@@ -4,9 +4,7 @@ import { idlFactory } from "../candid/foxic_factory.idl"
 import { _SERVICE } from "../candid/foxic_factory"
 import { idlFactory as walletIdlFactory } from "../candid/foxic_wallet.idl"
 import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
-// const factoryCanisterId = "qjdve-lqaaa-aaaaa-aaaeq-cai"
-console.log(factoryCanisterId)
-console.log(process.env.NODE_ENV)
+const { factoryCanisterId } = process.env
 export interface CreateActorResult<T> {
   actor: ActorSubclass<T>
   agent: HttpAgent
@@ -47,7 +45,7 @@ export async function getActor<T>(
 export async function getFactoryConnect(identity: SignIdentity) {
   const connection = await getActor<_SERVICE>(
     idlFactory,
-    factoryCanisterId,
+    factoryCanisterId!,
     identity,
   )
   return connection
@@ -56,7 +54,6 @@ export async function getWalletConnect(
   identity: SignIdentity,
   canisterId: string,
 ) {
-  console.log("getWalletConnect", canisterId)
   const connection = await getActor<wallet_SERVICE>(
     walletIdlFactory,
     canisterId,

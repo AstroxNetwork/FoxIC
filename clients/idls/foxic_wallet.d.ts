@@ -36,7 +36,6 @@ export interface TransferArgs {
 }
 export interface _SERVICE {
   get_owner: ActorMethod<[], string>;
-  greeting: ActorMethod<[string], string>;
   http_request: ActorMethod<[HttpRequest], HttpResponse>;
   is_owner: ActorMethod<[], boolean>;
   set_conf: ActorMethod<[FoxICWallet], undefined>;

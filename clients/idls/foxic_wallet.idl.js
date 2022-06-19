@@ -30,7 +30,6 @@ export const idlFactory = ({ IDL }) => {
   });
   return IDL.Service({
     get_owner: IDL.Func([], [IDL.Text], ['query']),
-    greeting: IDL.Func([IDL.Text], [IDL.Text], ['query']),
     http_request: IDL.Func([HttpRequest], [HttpResponse], ['query']),
     is_owner: IDL.Func([], [IDL.Bool], ['query']),
     set_conf: IDL.Func([FoxICWallet], [], []),

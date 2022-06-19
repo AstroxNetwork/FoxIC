@@ -26,7 +26,6 @@ type TransferArgs = record {
 };
 service : () -> {
   get_owner : () -> (text) query;
-  greeting : (text) -> (text) query;
   http_request : (HttpRequest) -> (HttpResponse) query;
   is_owner : () -> (bool) query;
   set_conf : (FoxICWallet) -> ();

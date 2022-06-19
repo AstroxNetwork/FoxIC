@@ -339,10 +339,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "foxic_helpers"
-version = "0.1.0"
-
-[[package]]
 name = "foxic_wallet"
 version = "0.1.0"
 dependencies = [
