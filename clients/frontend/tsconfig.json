@@ -29,6 +29,6 @@
     }
   },
   "include": [
-    "./frontend","*.json", "typings.d.ts"
+    "./frontend","*.json", "./typings.d.ts"
   ]
 }

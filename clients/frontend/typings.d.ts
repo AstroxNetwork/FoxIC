@@ -10,3 +10,4 @@ declare module '*.svg' {
 }
 
 declare const NODE: string;
+declare const factoryCanisterId: string;

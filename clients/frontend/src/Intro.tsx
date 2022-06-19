@@ -1,21 +1,24 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { counter } from "canisters/counter"
-import logo from "./assets/logo-dark.svg"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { initiateICPSnap } from "./services/metamask"
-import { MetamaskICPSnap } from "@astrox/icsnap-adapter"
-import { ICPSnapApi, SignRawMessageResponse } from "@astrox/icsnap-types"
-import { Signature } from "@dfinity/agent"
+import { ICPSnapApi } from "@astrox/icsnap-types"
 import Install from "./components/Install"
 import Authorized from "./components/Authorized"
+import Footer from "./components/Footer"
+import {
+  CreateActorResult,
+  getActor,
+  getFactoryConnect,
+} from "./services/connection"
+import { _SERVICE as factory_SERVICE } from "./candid/foxic_factory"
+import { Secp256k1KeyIdentity } from "@dfinity/identity"
+import { SnapIdentity } from "@astrox/icsnap-adapter"
 
 export function Intro() {
   const [principal, setPrincipal] = useState<string | undefined>(undefined)
-  const [api, setApi] = useState<ICPSnapApi | undefined>(undefined)
   const [installed, setInstalled] = useState<boolean>(false)
-  const [message, setMessage] = useState<string | undefined>(undefined)
-  const [signedMessage, setSignedMessage] = useState<
-    SignRawMessageResponse | undefined
-  >(undefined)
+  const [factoryConnect, setFactoryConnect] =
+    useState<CreateActorResult<factory_SERVICE>>()
+  const [identity, setIdentity] = useState<SnapIdentity>()
 
   const installSnap = useCallback(async () => {
     const installResult = await initiateICPSnap()
@@ -23,89 +26,36 @@ export function Intro() {
       setInstalled(false)
     } else {
       setInstalled(true)
-      setApi(await installResult.snap?.getICPSnapApi())
+      setIdentity(await installResult.snap?.createSnapIdentity())
     }
   }, [])
 
-  const getPrincipal = async () => {
-    setPrincipal(await api?.getPrincipal())
-  }
-
-  const signMessage = async () => {
-    const signed = await api?.signRawMessage(message!)
-    console.log({ signed })
-    setSignedMessage(signed)
-  }
-
   useEffect(() => {
-    if (!api) {
+    if (!identity) {
       installSnap()
     } else {
-      getPrincipal()
+      factoryActorInit()
     }
-  }, [api])
+  }, [identity])
+
+  const factoryActorInit = async () => {
+    const res = await getFactoryConnect(identity!)
+    setFactoryConnect(res)
+    // const result = await res.actor.get_wallet()
+    // console.log("get wallet", result)
+  }
+  console.log("factoryConnect", factoryConnect)
   return (
     <>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p style={{ fontSize: "2em", marginBottom: "0.5em" }}>
-          Ready. Lets use Snap
-        </p>
-        <div
-          style={{
-            display: "flex",
-            fontSize: "0.7em",
-            textAlign: "left",
-            padding: "2em",
-            borderRadius: "30px",
-            flexDirection: "column",
-            background: "rgb(220 218 224 / 25%)",
-            flex: 1,
-            width: "32em",
-          }}
-        >
-          {installed ? (
-            <div style={{ width: "100%", minWidth: "100%" }}>
-              <code>Principal is:</code>
-              <p>{principal ?? "...loading"}</p>
-            </div>
-          ) : (
-            <button className="demo-button" onClick={installSnap}>
-              Install Snap
-            </button>
-          )}
-          {installed ? (
-            <>
-              <label style={{ marginBottom: 16 }}>Input Messsage To Sign</label>
-              <input
-                aria-label="To Sign a message"
-                style={{ padding: "1em" }}
-                onChange={(e) => {
-                  setMessage(e.target.value)
-                }}
-              />
-              <button className="demo-button" onClick={signMessage}>
-                Sign Message
-              </button>
-            </>
-          ) : null}
-          {signedMessage?.signature !== undefined ? (
-            <div
-              style={{
-                wordBreak: "break-all",
-                maxWidth: "100%",
-                margin: "1em 0",
-              }}
-            >
-              <code>Signature is : </code>
-              <p>{signedMessage?.signature}</p>
-            </div>
-          ) : null}
-        </div>
-      </header> */}
-      {
-        installed ? <Authorized />: <Install handleInstall={installSnap}/>
-      }
+      {installed ? (
+        <Authorized
+          identity={identity!}
+          factoryConnect={factoryConnect!}
+        />
+      ) : (
+        <Install handleInstall={installSnap} />
+      )}
+      <Footer />
     </>
   )
 }
