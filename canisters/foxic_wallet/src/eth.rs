@@ -2,11 +2,10 @@ use crate::http::res_200;
 use crate::state::CONF;
 use crate::types::{vec_to_u8_32, Eth, HttpResponse, RPCResponse};
 use bigint::U512;
-use candid::Principal;
-use ic_ledger_types::{AccountBalanceArgs, AccountIdentifier, DEFAULT_SUBACCOUNT};
+
+use ic_ledger_types::{AccountBalanceArgs, AccountIdentifier};
 
 type RPCRequest = json_rpc_types::Request<Vec<serde_json::Value>>;
-// type RPCResponse = json_rpc_types::Response<Vec<serde_json::Value>, Err>;
 
 impl Default for Eth {
     fn default() -> Self {
@@ -74,7 +73,7 @@ impl Eth {
         let wallet = CONF.with(|w| w.borrow().clone());
 
         let v8: [u8; 32] = hex::decode(address.to_string()).map_or_else(
-            |e| ic_cdk::trap("account_id is not valid hex"),
+            |_| ic_cdk::trap("account_id is not valid hex"),
             |f| vec_to_u8_32(f),
         );
 

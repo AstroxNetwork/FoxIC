@@ -1,5 +1,4 @@
 use ic_cdk::api::*;
-use ic_cdk_macros::*;
 
 use ic_cdk::export::candid::CandidType;
 use ic_ledger_types::{AccountIdentifier, Subaccount, Tokens};

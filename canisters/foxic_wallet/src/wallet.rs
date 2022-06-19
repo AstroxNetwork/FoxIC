@@ -1,12 +1,10 @@
 use crate::types::{FoxICWallet, SendArgs, TransferArgs};
-use ic_cdk::api::call::{CallResult, RejectionCode};
-use ic_cdk::export::Principal;
+use ic_cdk::api::call::CallResult;
 use ic_cdk::id;
 use ic_ledger_types::{
     AccountBalanceArgs, AccountIdentifier, BlockIndex, Memo, Subaccount, Tokens,
     DEFAULT_SUBACCOUNT, MAINNET_LEDGER_CANISTER_ID,
 };
-use std::fmt;
 
 impl Default for FoxICWallet {
     fn default() -> Self {

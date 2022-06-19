@@ -6,7 +6,6 @@ use ic_cdk::caller;
 use ic_cdk_macros::*;
 use ic_types::Principal;
 use itertools::Itertools;
-use std::borrow::BorrowMut;
 use std::ops::Deref;
 
 #[init]

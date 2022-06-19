@@ -2,10 +2,8 @@
 use ic_cdk::export::candid::{CandidType, Nat};
 use ic_cdk::export::Principal;
 use ic_cdk::{api, id};
-use itertools::Itertools;
 use serde::Deserialize;
-use std::collections::{BTreeMap, HashMap};
-use std::str::FromStr;
+use std::collections::BTreeMap;
 
 use crate::types::Canister;
 use crate::types::CanisterStatus;

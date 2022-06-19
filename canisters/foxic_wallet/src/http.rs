@@ -1,10 +1,5 @@
-use ic_cdk::api::*;
-use ic_cdk_macros::*;
-
 use crate::types::{HeaderField, HttpRequest, HttpResponse};
 use lazy_static::lazy_static;
-
-use serde::Deserialize;
 
 lazy_static! {
     static ref DEFAULT_JSON_HEADER: std::sync::Mutex<Vec<HeaderField>> =
@@ -25,7 +20,7 @@ lazy_static! {
 }
 
 // A common handlers
-
+#[allow(dead_code)]
 pub fn ok200() -> HttpResponse {
     HttpResponse {
         status_code: 200,

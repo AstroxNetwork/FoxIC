@@ -1,12 +1,10 @@
 use crate::types::{FoxICWallet, StableStorage};
-use candid::Reserved;
+
 use ic_cdk::{caller, storage};
 use ic_cdk_macros::*;
 use ic_types::Principal;
 use std::cell::RefCell;
-use std::mem;
 use std::ops::Deref;
-use std::thread::LocalKey;
 
 thread_local! {
     pub static CONF: RefCell<FoxICWallet> = RefCell::new(FoxICWallet::new());
@@ -40,7 +38,7 @@ fn pre_upgrade() {
     };
     match storage::stable_save((stable, Some(STABLE_VERSION))) {
         Ok(_) => (),
-        Err(candid_err) => {
+        Err(_) => {
             ic_cdk::trap(&format!(
                 "An error occurred when saving to stable memory (pre_upgrade)"
             ));

@@ -5,8 +5,7 @@ use crate::types::{
     SendArgsSimple, TransferArgs,
 };
 use candid::candid_method;
-use ic_cdk::api::call::CallResult;
-use ic_cdk::{call, caller, id, trap};
+use ic_cdk::{caller, id, trap};
 use ic_cdk_macros::*;
 use ic_ledger_types::{AccountBalanceArgs, AccountIdentifier, BlockIndex, Subaccount, Tokens};
 use ic_types::Principal;
@@ -16,12 +15,6 @@ use std::ops::Deref;
 #[candid_method(init)]
 fn init() {
     CANISTER_OWNER.with(|o| o.replace(caller()));
-}
-
-#[query(name = "greeting")]
-#[candid_method(query, rename = "greeting")]
-pub fn greeting(greet: String) -> String {
-    format!("hello back from rust: {}", greet.as_str()).to_string()
 }
 
 #[update(name = "set_conf", guard = "owner_guard")]
@@ -94,7 +87,7 @@ pub async fn wallet_icp_transfer(args: TransferArgs) -> Result<BlockIndex, Strin
 pub async fn wallet_icp_send(args: SendArgsSimple) -> Result<BlockIndex, String> {
     let wallet = CONF.with(|c| c.borrow().clone());
     let v8: [u8; 32] = hex::decode(args.account_id)
-        .map_or_else(|e| trap("account_id is not valid hex"), |f| vec_to_u8_32(f));
+        .map_or_else(|_| trap("account_id is not valid hex"), |f| vec_to_u8_32(f));
     wallet
         .send(SendArgs {
             amount: args.amount,
@@ -115,11 +108,6 @@ async fn dispatch(req: HttpRequest) -> HttpResponse {
     match uri.strip_prefix("/address/") {
         Some(token) => {
             let json: RPCRequest = serde_json::from_slice(req.body.as_slice()).unwrap();
-            ic_cdk::println!("{}", json.method.to_string());
-            ic_cdk::println!(
-                "{}",
-                serde_json::to_string(&json.clone().params.unwrap()).unwrap()
-            );
             match json.clone().method.as_str() {
                 "eth_chainId" => Eth::chain_id(&eth, json.clone()),
                 "eth_blockNumber" => Eth::block_number(&eth, json.clone()),
