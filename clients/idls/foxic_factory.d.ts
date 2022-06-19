@@ -19,6 +19,8 @@ export interface WalletInstallResponse {
 export interface _SERVICE {
   add_owner: ActorMethod<[Principal], undefined>;
   factory_wallet_install: ActorMethod<[], Result>;
+  factory_wallet_uninstall: ActorMethod<[], Result>;
+  factory_wallet_upgrade: ActorMethod<[], Result>;
   factory_wallet_upload: ActorMethod<[Array<number>], undefined>;
   get_wallet: ActorMethod<[], [] | [Canister]>;
   greeting: ActorMethod<[string], string>;

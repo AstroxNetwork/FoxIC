@@ -1,9 +1,6 @@
 {
   "canisters": {
-    "assets": {
-      "dependencies": [
-        "counter"
-      ],
+    "foxic_frontend": {
       "frontend": {
         "entrypoint": "dist/index.html"
       },

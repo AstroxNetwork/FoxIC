@@ -23,5 +23,6 @@ export const config = <Canisters>[
     package: 'foxic_factory',
     bin_name: 'foxic_factory',
     config: './configs/foxic_factory.json',
+    no_deploy: true,
   },
 ];

@@ -11,7 +11,8 @@
     "canisters:script": "swc ./scripts -d dist/scripts",
     "canisters:run": "pnpm run canisters:script && pnpm run canisters:build && pnpm run canisters:deploy",
     "format:idl": "prettier --write clients/idls/**/*.{js,ts}",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "wallet:upload:production": "NODE_ENV=production NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.3",

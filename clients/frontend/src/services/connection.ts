@@ -4,7 +4,7 @@ import { idlFactory } from "../candid/foxic_factory.idl"
 import { _SERVICE } from "../candid/foxic_factory"
 import { idlFactory as walletIdlFactory } from "../candid/foxic_wallet.idl"
 import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
-const { factoryCanisterId } = process.env
+const factoryCanisterId = process.env.factoryCanisterId
 export interface CreateActorResult<T> {
   actor: ActorSubclass<T>
   agent: HttpAgent

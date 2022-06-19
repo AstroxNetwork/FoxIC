@@ -136,6 +136,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
             walletCanister={walletCanister?.toText()!}
             walletController={walletController!}
             walletConnect={walletConnect!}
+            factoryConnect={factoryConnect}
           />
         ) : createLoading ? (
           <div className="card">

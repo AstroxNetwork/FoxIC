@@ -16,6 +16,8 @@ type WalletInstallResponse = record {
 service : () -> {
   add_owner : (principal) -> ();
   factory_wallet_install : () -> (Result);
+  factory_wallet_uninstall : () -> (Result);
+  factory_wallet_upgrade : () -> (Result);
   factory_wallet_upload : (vec nat8) -> ();
   get_wallet : () -> (opt Canister) query;
   greeting : (text) -> (text) query;

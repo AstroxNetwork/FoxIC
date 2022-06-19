@@ -1,6 +1,9 @@
 use crate::factory::FoxICFactory;
 use crate::state::{owner_guard, CONF, MANAGER_LIST};
-use crate::types::{Canister, WalletInstallRequest, WalletInstallResponse};
+use crate::types::{
+    Canister, WalletInstallRequest, WalletInstallResponse, WalletUninstallRequest,
+    WalletUninstallResponse, WalletUpgradeRequest, WalletUpgradeResponse,
+};
 use candid::candid_method;
 use ic_cdk::caller;
 use ic_cdk_macros::*;
@@ -63,6 +66,35 @@ pub async fn factory_wallet_install() -> Result<WalletInstallResponse, String> {
         .install_foxic_wallet(WalletInstallRequest {
             controller: caller(),
             cycles: None,
+        })
+        .await;
+    CONF.with(|f| f.replace(factory));
+    result
+}
+
+/// async function getting balance
+#[update(name = "factory_wallet_upgrade")]
+#[candid_method(update, rename = "factory_wallet_upgrade")]
+pub async fn factory_wallet_upgrade() -> Result<WalletUpgradeResponse, String> {
+    let mut factory = CONF.with(|f| f.borrow_mut().deref().clone());
+    let result = factory
+        .upgrade_wallet(WalletUpgradeRequest {
+            controller: caller(),
+            cycles: None,
+        })
+        .await;
+    CONF.with(|f| f.replace(factory));
+    result
+}
+
+/// async function getting balance
+#[update(name = "factory_wallet_uninstall")]
+#[candid_method(update, rename = "factory_wallet_uninstall")]
+pub async fn factory_wallet_uninstall() -> Result<WalletUninstallResponse, String> {
+    let mut factory = CONF.with(|f| f.borrow_mut().deref().clone());
+    let result = factory
+        .uninstall_wallet(WalletUninstallRequest {
+            controller: caller(),
         })
         .await;
     CONF.with(|f| f.replace(factory));

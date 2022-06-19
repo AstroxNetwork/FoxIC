@@ -28,7 +28,30 @@ pub struct WalletInstallRequest {
 }
 
 #[derive(CandidType, Deserialize, Clone, Debug)]
+pub struct WalletUpgradeRequest {
+    pub controller: Principal,
+    pub cycles: Option<u128>,
+}
+
+#[derive(CandidType, Deserialize, Clone, Debug)]
+pub struct WalletUninstallRequest {
+    pub controller: Principal,
+}
+
+#[derive(CandidType, Deserialize, Clone, Debug)]
 pub struct WalletInstallResponse {
+    pub(crate) canister_id: Principal,
+    pub(crate) controller: Principal,
+}
+
+#[derive(CandidType, Deserialize, Clone, Debug)]
+pub struct WalletUpgradeResponse {
+    pub(crate) canister_id: Principal,
+    pub(crate) controller: Principal,
+}
+
+#[derive(CandidType, Deserialize, Clone, Debug)]
+pub struct WalletUninstallResponse {
     pub(crate) canister_id: Principal,
     pub(crate) controller: Principal,
 }
@@ -37,4 +60,28 @@ pub struct WalletInstallResponse {
 pub(crate) struct StableStorage {
     pub(crate) factory: FoxICFactory,
     pub(crate) manager_list: Vec<Principal>,
+}
+
+#[derive(CandidType, Deserialize)]
+pub enum InstallMode {
+    #[serde(rename = "install")]
+    Install,
+    #[serde(rename = "reinstall")]
+    Reinstall,
+    #[serde(rename = "upgrade")]
+    Upgrade,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct CanisterInstall {
+    pub mode: InstallMode,
+    pub canister_id: Principal,
+    #[serde(with = "serde_bytes")]
+    pub wasm_module: Vec<u8>,
+    pub arg: Vec<u8>,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct CanisterUnInstall {
+    pub canister_id: Principal,
 }

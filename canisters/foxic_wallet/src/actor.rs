@@ -44,7 +44,7 @@ pub fn get_owner() -> String {
 #[query(name = "wallet_url_get")]
 #[candid_method(query, rename = "wallet_url_get")]
 pub fn wallet_url_get(address: String) -> String {
-    (format!("https://{}.ic0.app/address/", id().to_text()).to_string()
+    (format!("https://{}.raw.ic0.app/address/", id().to_text()).to_string()
         + format!("{}", address.as_str()).as_str())
     .to_string()
 }

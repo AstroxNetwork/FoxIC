@@ -23,6 +23,8 @@ export const idlFactory = ({ IDL }) => {
   return IDL.Service({
     add_owner: IDL.Func([IDL.Principal], [], []),
     factory_wallet_install: IDL.Func([], [Result], []),
+    factory_wallet_uninstall: IDL.Func([], [Result], []),
+    factory_wallet_upgrade: IDL.Func([], [Result], []),
     factory_wallet_upload: IDL.Func([IDL.Vec(IDL.Nat8)], [], []),
     get_wallet: IDL.Func([], [IDL.Opt(Canister)], ['query']),
     greeting: IDL.Func([IDL.Text], [IDL.Text], ['query']),

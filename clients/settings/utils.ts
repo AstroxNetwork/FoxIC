@@ -17,10 +17,11 @@ export function getCanisterId(configName: string): string | undefined {
   const isProd = process.env.NODE_ENV === 'production';
   let canisterId;
   if (isProd) {
-    const icFile = fs.readFileSync(path.resolve('./canister_ids.json'), {
-      encoding: 'utf8',
-    });
-    canisterId = JSON.parse(icFile)[configName].ic ?? undefined;
+    const localFile = fs.readFileSync(
+      path.resolve(`./configs/${configName}.json`),
+      { encoding: 'utf8' },
+    );
+    canisterId = JSON.parse(localFile).PRODUCTION_CANISTERID;
   } else {
     const localFile = fs.readFileSync(
       path.resolve(`./configs/${configName}.json`),

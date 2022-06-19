@@ -1,12 +1,15 @@
 // use crate::state::WALLET;
 use ic_cdk::export::candid::{CandidType, Nat};
 use ic_cdk::export::Principal;
-use ic_cdk::{api, id};
+use ic_cdk::{api, id, trap};
 use serde::Deserialize;
 use std::collections::BTreeMap;
 
-use crate::types::Canister;
-use crate::types::CanisterStatus;
+use crate::types::{
+    Canister, CanisterInstall, CanisterUnInstall, InstallMode, WalletUninstallRequest,
+    WalletUninstallResponse, WalletUpgradeResponse,
+};
+use crate::types::{CanisterStatus, WalletUpgradeRequest};
 use crate::types::{WalletInstallRequest, WalletInstallResponse};
 
 #[derive(Clone, CandidType, Deserialize)]
@@ -79,24 +82,6 @@ async fn _create_canister_call(args: CreateCanisterArgs<u128>) -> Result<CreateR
 
 async fn _install_wallet(canister_id: &Principal, wasm_module: Vec<u8>) -> Result<(), String> {
     // Install Wasm
-    #[derive(CandidType, Deserialize)]
-    enum InstallMode {
-        #[serde(rename = "install")]
-        Install,
-        #[serde(rename = "reinstall")]
-        Reinstall,
-        #[serde(rename = "upgrade")]
-        Upgrade,
-    }
-
-    #[derive(CandidType, Deserialize)]
-    struct CanisterInstall {
-        mode: InstallMode,
-        canister_id: Principal,
-        #[serde(with = "serde_bytes")]
-        wasm_module: Vec<u8>,
-        arg: Vec<u8>,
-    }
 
     let install_config = CanisterInstall {
         mode: InstallMode::Install,
@@ -108,6 +93,58 @@ async fn _install_wallet(canister_id: &Principal, wasm_module: Vec<u8>) -> Resul
     match api::call::call(
         Principal::management_canister(),
         "install_code",
+        (install_config,),
+    )
+    .await
+    {
+        Ok(x) => x,
+        Err((code, msg)) => {
+            return Err(format!(
+                "An error happened during the _install_wallet: {}: {}",
+                code as u8, msg
+            ));
+        }
+    };
+    Ok(())
+}
+
+async fn _upgrade_wallet(canister_id: &Principal, wasm_module: Vec<u8>) -> Result<(), String> {
+    // Install Wasm
+
+    let install_config = CanisterInstall {
+        mode: InstallMode::Upgrade,
+        canister_id: *canister_id,
+        wasm_module: wasm_module.clone(),
+        arg: b" ".to_vec(),
+    };
+
+    match api::call::call(
+        Principal::management_canister(),
+        "install_code",
+        (install_config,),
+    )
+    .await
+    {
+        Ok(x) => x,
+        Err((code, msg)) => {
+            return Err(format!(
+                "An error happened during the _install_wallet: {}: {}",
+                code as u8, msg
+            ));
+        }
+    };
+    Ok(())
+}
+
+async fn _uninstall_wallet(canister_id: &Principal) -> Result<(), String> {
+    // Install Wasm
+    let install_config = CanisterUnInstall {
+        canister_id: *canister_id,
+    };
+
+    match api::call::call(
+        Principal::management_canister(),
+        "uninstall_code",
         (install_config,),
     )
     .await
@@ -178,6 +215,49 @@ impl FoxICFactory {
                     }
                     Err(_) => Err("Set owner result".to_string()),
                 }
+            }
+            Err(e) => Err(e),
+        }
+    }
+
+    pub async fn upgrade_wallet(
+        &mut self,
+        request: WalletUpgradeRequest,
+    ) -> Result<WalletUpgradeResponse, String> {
+        let canister = self.holders.get(&request.controller.clone());
+        if canister.is_none() {
+            ic_cdk::trap("No controller found, sorry");
+        }
+        let canister_id = canister.unwrap().canister_id;
+
+        match _upgrade_wallet(&canister_id.clone(), self.wallet_wasm.clone()).await {
+            Ok(_) => Ok(WalletUpgradeResponse {
+                canister_id: canister_id.clone(),
+                controller: request.controller.clone(),
+            }),
+            Err(e) => Err(e),
+        }
+    }
+
+    pub async fn uninstall_wallet(
+        &mut self,
+        request: WalletUninstallRequest,
+    ) -> Result<WalletUninstallResponse, String> {
+        let canister = self.holders.get(&request.controller.clone());
+        if canister.is_none() {
+            ic_cdk::trap("No controller found, sorry");
+        }
+        let canister_id = canister.unwrap().canister_id;
+
+        match _uninstall_wallet(&canister_id.clone()).await {
+            Ok(_) => {
+                self.holders
+                    .remove(&request.controller.clone())
+                    .unwrap_or_else(|| trap("remove canister fail"));
+                Ok(WalletUninstallResponse {
+                    canister_id: canister_id.clone(),
+                    controller: request.controller.clone(),
+                })
             }
             Err(e) => Err(e),
         }

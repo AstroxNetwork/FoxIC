@@ -1,6 +1,7 @@
 import { Principal } from "@dfinity/principal"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
+import { _SERVICE as factory_SERVICE } from "../candid/foxic_factory"
 import { CreateActorResult } from "../services/connection"
 import QrCode from "qrcode.react"
 import { CODE, COPY, REFRESH } from "../utils/resCont"
@@ -11,9 +12,11 @@ type WalletProps = {
   walletCanister: string
   walletController: [Principal] | []
   walletConnect: CreateActorResult<wallet_SERVICE>
+  factoryConnect: CreateActorResult<factory_SERVICE>
 }
 const Wallet: React.FC<WalletProps> = (props) => {
-  const { walletCanister, walletConnect, walletController } = props
+  const { walletCanister, walletConnect, walletController, factoryConnect } =
+    props
   const [address, setAddress] = useState<string | undefined>()
   const [toAddress, setToAddress] = useState<string | undefined>()
   const [amount, setAmount] = useState<string | undefined>()
@@ -68,6 +71,10 @@ const Wallet: React.FC<WalletProps> = (props) => {
     }
   }
 
+  const updateWallet = async () => {
+    await factoryConnect?.actor.factory_wallet_upgrade()
+  }
+
   return (
     <>
       <div className="card">
@@ -97,24 +104,31 @@ const Wallet: React.FC<WalletProps> = (props) => {
           {sendLoading ? "Send..." : "Send"}
         </a>
         <p style={{ marginTop: 20 }}>Balance:</p>
-          {balance ? (
-            <div className="flex align-items-center">
-              <h2 className="c_brand">{balanceToString(balance).total}</h2>
-              <img
-                className={`refreshing ${refreshLoading ? "spinAnimate" : ""}`}
-                src={REFRESH}
-                style={{ width: 20, height: 20, marginLeft: 10 }}
-                alt=""
-                onClick={getBalance}
-              />
-            </div>
-          ) : null}
+        {balance ? (
+          <div className="flex align-items-center">
+            <h2 className="c_brand">{balanceToString(balance).total}</h2>
+            <img
+              className={`refreshing ${refreshLoading ? "spinAnimate" : ""}`}
+              src={REFRESH}
+              style={{ width: 20, height: 20, marginLeft: 10 }}
+              alt=""
+              onClick={getBalance}
+            />
+          </div>
+        ) : null}
       </div>
       <div className="card">
         <h2>Wallet details</h2>
         <div className="flex flex-column">
-          <p style={{ marginTop: 20 }}>Canister Principal ID:</p>
-          <p className="c_grey">{walletCanister}</p>
+          <p style={{ marginTop: 20 }}>Canister ID:</p>
+          <p
+            className="c_grey"
+            // onClick={async () => {
+            //   updateWallet()
+            // }}
+          >
+            {walletCanister}
+          </p>
           <p style={{ marginTop: 20 }}>Controller: </p>
           {walletController?.map((principal) => (
             <p className="c_grey" key={principal.toText()}>
@@ -139,7 +153,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
               }
             />
           </div>
-          
+
           <p style={{ marginTop: 50 }}>wallet detail url:</p>
           <div className="flex">
             <div className="flex-1">

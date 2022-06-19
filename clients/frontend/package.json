@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:dev": "tsc && vite build",
+    "build": "tsc && DFX_NETWORK=ic vite build",
     "serve": "vite preview",
     "gen:foxic_factory:types": "didc bind ../../canisters/foxic_factory/foxic_factory.did -t ts > ./src/candid/foxic_factory.d.ts",
     "gen:foxic_factory:js": "didc bind ../../canisters/foxic_factory/foxic_factory.did -t js > ./src/candid/foxic_factory.idl.js",

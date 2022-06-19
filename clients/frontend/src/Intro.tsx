@@ -1,20 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { initiateICPSnap } from "./services/metamask"
-import { ICPSnapApi } from "@astrox/icsnap-types"
+
 import Install from "./components/Install"
 import Authorized from "./components/Authorized"
 import Footer from "./components/Footer"
-import {
-  CreateActorResult,
-  getActor,
-  getFactoryConnect,
-} from "./services/connection"
+import { CreateActorResult, getFactoryConnect } from "./services/connection"
 import { _SERVICE as factory_SERVICE } from "./candid/foxic_factory"
-import { Secp256k1KeyIdentity } from "@dfinity/identity"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
 
 export function Intro() {
-  const [principal, setPrincipal] = useState<string | undefined>(undefined)
   const [installed, setInstalled] = useState<boolean>(false)
   const [factoryConnect, setFactoryConnect] =
     useState<CreateActorResult<factory_SERVICE>>()
@@ -44,14 +38,10 @@ export function Intro() {
     // const result = await res.actor.get_wallet()
     // console.log("get wallet", result)
   }
-  console.log("factoryConnect", factoryConnect)
   return (
     <>
       {installed ? (
-        <Authorized
-          identity={identity!}
-          factoryConnect={factoryConnect!}
-        />
+        <Authorized identity={identity!} factoryConnect={factoryConnect!} />
       ) : (
         <Install handleInstall={installSnap} />
       )}
