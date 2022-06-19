@@ -55,3 +55,8 @@ canisters/**/*.auto.did
 # configs
 configs/*.json
 !configs/constant.json
+
+#lock file
+**/yarn.lock
+**/package-lock.json
+**/pnpm-lock.yaml
