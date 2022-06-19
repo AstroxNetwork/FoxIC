@@ -45,6 +45,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
         amount: { e8s: balanceFromString(amount) },
       })
       setSendLoading(false)
+      getBalance()
     }
   }
 
@@ -95,6 +96,19 @@ const Wallet: React.FC<WalletProps> = (props) => {
         >
           {sendLoading ? "Send..." : "Send"}
         </a>
+        <p style={{ marginTop: 20 }}>Balance:</p>
+          {balance ? (
+            <div className="flex align-items-center">
+              <h2 className="c_brand">{balanceToString(balance).total}</h2>
+              <img
+                className={`refreshing ${refreshLoading ? "spinAnimate" : ""}`}
+                src={REFRESH}
+                style={{ width: 20, height: 20, marginLeft: 10 }}
+                alt=""
+                onClick={getBalance}
+              />
+            </div>
+          ) : null}
       </div>
       <div className="card">
         <h2>Wallet details</h2>
@@ -125,19 +139,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
               }
             />
           </div>
-          <p style={{ marginTop: 20 }}>Balance:</p>
-          {balance ? (
-            <div className="flex align-items-center">
-              <h2 className="c_brand">{balanceToString(balance).total}</h2>
-              <img
-                className={`refreshing ${refreshLoading ? "spinAnimate" : ""}`}
-                src={REFRESH}
-                style={{ width: 20, height: 20, marginLeft: 10 }}
-                alt=""
-                onClick={getBalance}
-              />
-            </div>
-          ) : null}
+          
           <p style={{ marginTop: 50 }}>wallet detail url:</p>
           <div className="flex">
             <div className="flex-1">

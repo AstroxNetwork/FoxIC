@@ -4,7 +4,7 @@ import { idlFactory } from "../candid/foxic_factory.idl"
 import { _SERVICE } from "../candid/foxic_factory"
 import { idlFactory as walletIdlFactory } from "../candid/foxic_wallet.idl"
 import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
-const factoryCanisterId = "qjdve-lqaaa-aaaaa-aaaeq-cai"
+// const factoryCanisterId = "qjdve-lqaaa-aaaaa-aaaeq-cai"
 console.log(factoryCanisterId)
 console.log(process.env.NODE_ENV)
 export interface CreateActorResult<T> {
