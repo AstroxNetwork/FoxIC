@@ -29,29 +29,29 @@ describe('foxic factory test', () => {
     await factory?.factory_wallet_upload(Array.from(wasm));
   });
 
-  test('install wallet wasm', async () => {
-    const hasWallet = await factory?.get_wallet();
-    if (hasWallet && hasWallet.length === 0) {
-      const uploadResult = await factory?.factory_wallet_install();
-      if (uploadResult && hasOwnProperty(uploadResult, 'Ok')) {
-        const { controller, canister_id } = uploadResult.Ok;
-        wallet_canister = canister_id;
+  // test('install wallet wasm', async () => {
+  //   const hasWallet = await factory?.get_wallet();
+  //   if (hasWallet && hasWallet.length === 0) {
+  //     const uploadResult = await factory?.factory_wallet_install();
+  //     if (uploadResult && hasOwnProperty(uploadResult, 'Ok')) {
+  //       const { controller, canister_id } = uploadResult.Ok;
+  //       wallet_canister = canister_id;
 
-        wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
+  //       wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
 
-        expect(identity.getPrincipal().toText()).toBe(controller.toText());
-      }
-    } else if (hasWallet && hasWallet.length === 1) {
-      wallet_canister = hasWallet[0].canister_id;
-      wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
-      expect(identity.getPrincipal().toText()).toBe(
-        hasWallet[0].controller[0]!.toText(),
-      );
-    }
-  });
+  //       expect(identity.getPrincipal().toText()).toBe(controller.toText());
+  //     }
+  //   } else if (hasWallet && hasWallet.length === 1) {
+  //     wallet_canister = hasWallet[0].canister_id;
+  //     wallet = await getActor(identity, WalletIDL, wallet_canister.toText());
+  //     expect(identity.getPrincipal().toText()).toBe(
+  //       hasWallet[0].controller[0]!.toText(),
+  //     );
+  //   }
+  // });
 
-  test('is preset identity is owner of installed wallet', async () => {
-    const isOwner = await wallet?.is_owner();
-    expect(isOwner).toBe(true);
-  });
+  // test('is preset identity is owner of installed wallet', async () => {
+  //   const isOwner = await wallet?.is_owner();
+  //   expect(isOwner).toBe(true);
+  // });
 });

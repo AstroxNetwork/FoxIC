@@ -87,10 +87,14 @@ impl Eth {
 
         let icp_512 = U512::from(icp.clone().unwrap().e8s() as u64);
         let p10 = U512::from(10000000000 as u64);
+        let balance_string = match icp_512 == U512::from(0u64) {
+            true => "0x0".to_string(),
+            false => format!("{:#02x}", icp_512 * p10).to_string(),
+        };
 
         let res = RPCResponse {
             jsonrpc: "2.0".to_string(),
-            result: format!("{:#02x}", icp_512 * p10).to_string(),
+            result: balance_string,
             id: req.id,
         };
         res_200(serde_json::to_vec(&res).unwrap())
