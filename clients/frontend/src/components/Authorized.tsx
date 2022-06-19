@@ -10,6 +10,7 @@ import FOX_ANIMATE from "../assets/FOXIC.json"
 import Lottie from "react-lottie"
 import Wallet from "./Wallet"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
+import Copy from "./Copy"
 
 const defaultOptions = {
   loop: true,
@@ -42,7 +43,9 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
   }, [factoryConnect])
 
   const signMessage = async () => {
-    const signed = await identity?.signRawMessage(message!)
+    console.log('identity', identity)
+    console.log('identity', identity.signRawMessage)
+    const signed = await identity.signRawMessage(message!)
     console.log({ signed })
     setSignedMessage(signed)
   }
@@ -109,7 +112,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
           <h2>Principal ID</h2>
           <div className="flex" style={{ marginBottom: 30 }}>
             <p className="c_grey">{identity?.getPrincipal().toText()}</p>
-            <a href="">COPY</a>
+            <Copy text={identity?.getPrincipal().toText()} content={<a className="c_brand">COPY</a>} />
           </div>
           <input
             aria-label="To Sign a message"
