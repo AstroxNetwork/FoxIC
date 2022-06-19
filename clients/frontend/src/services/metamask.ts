@@ -1,7 +1,7 @@
 import { SnapRpcMethodRequest } from "@astrox/icsnap-types"
 import { MetamaskICPSnap, enableICPSnap } from "@astrox/icsnap-adapter"
 
-export const defaultSnapId = "local:http://localhost:8081"
+export const defaultSnapId = "local:http://localhost:8082"
 
 let isInstalled: boolean = false
 

@@ -44,7 +44,7 @@ function Auth() {
   // }
 
   const signOut = async () => {
-    await connection.actor.greeting('1')
+   
     await client.logout()
     setSignedIn(false)
     setPrincipal("")

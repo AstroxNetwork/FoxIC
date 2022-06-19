@@ -9,4 +9,4 @@ declare module '*.svg' {
   export default url;
 }
 
-declare const ENV: string;
+declare const NODE: string;

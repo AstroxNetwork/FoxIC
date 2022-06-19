@@ -1,0 +1,1 @@
+export const METAMASK_FLASK = 'https://metamask.io/flask'

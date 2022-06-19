@@ -14,10 +14,10 @@ export async function _createActor<T>(
   identity?: SignIdentity,
   host?: string,
 ): Promise<CreateActorResult<T>> {
-  console.log('ENV', ENV)
-  const agent = new HttpAgent({ identity, host: host ?? ENV !== 'production' ? 'http://localhost:8000' : 'https://ic0.app' });
+  console.log('ENV', NODE)
+  const agent = new HttpAgent({ identity, host: host ?? NODE !== 'production' ? 'http://localhost:8000' : 'https://ic0.app' });
   // Only fetch the root key when we're not in prod
-  if (ENV !== 'production') {
+  if (NODE !== 'production') {
     await agent.fetchRootKey();
   }
   const actor = Actor.createActor<T>(interfaceFactory, {

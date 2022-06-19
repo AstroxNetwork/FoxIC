@@ -5,6 +5,8 @@ import { initiateICPSnap } from "./services/metamask"
 import { MetamaskICPSnap } from "@astrox/icsnap-adapter"
 import { ICPSnapApi, SignRawMessageResponse } from "@astrox/icsnap-types"
 import { Signature } from "@dfinity/agent"
+import Install from "./components/Install"
+import Authorized from "./components/Authorized"
 
 export function Intro() {
   const [principal, setPrincipal] = useState<string | undefined>(undefined)
@@ -44,7 +46,7 @@ export function Intro() {
   }, [api])
   return (
     <>
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p style={{ fontSize: "2em", marginBottom: "0.5em" }}>
           Ready. Lets use Snap
@@ -100,32 +102,10 @@ export function Intro() {
             </div>
           ) : null}
         </div>
-
-        <p style={{ fontSize: "0.6em" }}>ICSnap is running inside metamask</p>
-      </header>
-      <footer>
-        <div
-          style={{ textAlign: "center", fontSize: "0.8em", marginTop: "2em" }}
-        >
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://sdk.dfinity.org/docs/developers-guide/sdk-guide.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            IC SDK Docs
-          </a>
-        </div>
-      </footer>
+      </header> */}
+      {
+        installed ? <Authorized />: <Install handleInstall={installSnap}/>
+      }
     </>
   )
 }
