@@ -104,7 +104,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
           {sendLoading ? "Send..." : "Send"}
         </a>
         <p style={{ marginTop: 20 }}>Balance:</p>
-        {balance ? (
+        {balance !== undefined ? (
           <div className="flex align-items-center">
             <h2 className="c_brand">{balanceToString(balance).total}</h2>
             <img
