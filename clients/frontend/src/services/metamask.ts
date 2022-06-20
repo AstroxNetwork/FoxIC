@@ -15,7 +15,7 @@ let isInstalled: boolean = false
 export interface SnapInitializationResponse {
   isSnapInstalled: boolean
   snap?: MetamaskICPSnap
-  identity?: SignIdentity
+  identity?: SnapIdentity
   // sessionKey?: Secp256k1KeyIdentity
 }
 

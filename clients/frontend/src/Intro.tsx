@@ -6,13 +6,13 @@ import Authorized from "./components/Authorized"
 import Footer from "./components/Footer"
 import { CreateActorResult, getFactoryConnect } from "./services/connection"
 import { _SERVICE as factory_SERVICE } from "./candid/foxic_factory"
-import { SignIdentity } from "@dfinity/agent"
+import { SnapIdentity } from "@astrox/icsnap-adapter"
 
 export function Intro() {
   const [installed, setInstalled] = useState<boolean>(false)
   const [factoryConnect, setFactoryConnect] =
     useState<CreateActorResult<factory_SERVICE>>()
-  const [identity, setIdentity] = useState<SignIdentity>()
+  const [identity, setIdentity] = useState<SnapIdentity>()
 
   const installSnap = useCallback(async () => {
     const installResult = await initiateICPSnap()
