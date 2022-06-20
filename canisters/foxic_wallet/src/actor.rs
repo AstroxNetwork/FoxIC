@@ -107,7 +107,7 @@ pub async fn wallet_icp_send(args: SendArgsSimple) -> Result<BlockIndex, String>
         .await
 }
 
-#[export_name = "canister_heartbeat"]
+#[heartbeat]
 async fn heartbeat() {
     let accounts = CONF.with(|c| c.deref().borrow().watch_balances.clone());
     for i in accounts.iter() {
