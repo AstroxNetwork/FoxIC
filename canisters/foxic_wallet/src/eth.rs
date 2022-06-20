@@ -69,7 +69,7 @@ impl Eth {
         };
         res_200(serde_json::to_vec(&res).unwrap())
     }
-    pub async fn balance(&self, address: &str, req: RPCRequest) -> HttpResponse {
+    pub fn balance(&self, address: &str, req: RPCRequest) -> HttpResponse {
         let wallet = CONF.with(|w| w.borrow().clone());
 
         let v8: [u8; 32] = hex::decode(address.to_string()).map_or_else(
@@ -77,12 +77,16 @@ impl Eth {
             |f| vec_to_u8_32(f),
         );
 
+        // let icp = wallet
+        //     .balance_of(Some(AccountBalanceArgs {
+        //         account: AccountIdentifier::try_from(v8)
+        //             .map_or_else(|e| ic_cdk::trap(e.as_str()), |f| f),
+        //     }))
+        //     .await;
+
         let icp = wallet
-            .balance_of(Some(AccountBalanceArgs {
-                account: AccountIdentifier::try_from(v8)
-                    .map_or_else(|e| ic_cdk::trap(e.as_str()), |f| f),
-            }))
-            .await;
+            .watch_balances
+            .get(&AccountIdentifier::try_from(v8).map_or_else(|e| ic_cdk::trap(e.as_str()), |f| f));
 
         let icp_512 = U512::from(icp.clone().unwrap().e8s() as u64);
         let p10 = U512::from(10000000000 as u64);

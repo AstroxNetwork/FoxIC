@@ -16,6 +16,7 @@ export const idlFactory = ({ IDL }) => {
     transaction_fee: Tokens,
     subaccount: IDL.Opt(IDL.Vec(IDL.Nat8)),
     ledger_canister: IDL.Principal,
+    watch_balances: IDL.Vec(IDL.Tuple(IDL.Vec(IDL.Nat8), Tokens)),
   });
   const AccountBalanceArgs = IDL.Record({ account: IDL.Vec(IDL.Nat8) });
   const SendArgsSimple = IDL.Record({

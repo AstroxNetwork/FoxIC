@@ -5,6 +5,7 @@ use ic_ledger_types::{
     AccountBalanceArgs, AccountIdentifier, BlockIndex, Memo, Subaccount, Tokens,
     DEFAULT_SUBACCOUNT, MAINNET_LEDGER_CANISTER_ID,
 };
+use itertools::Itertools;
 
 impl Default for FoxICWallet {
     fn default() -> Self {
@@ -12,6 +13,7 @@ impl Default for FoxICWallet {
             ledger_canister: MAINNET_LEDGER_CANISTER_ID,
             subaccount: None,
             transaction_fee: Tokens::from_e8s(10_000),
+            watch_balances: Default::default(),
         }
     }
 }
@@ -22,7 +24,16 @@ impl FoxICWallet {
             ledger_canister: MAINNET_LEDGER_CANISTER_ID,
             subaccount: None,
             transaction_fee: Tokens::from_e8s(10_000),
+            watch_balances: Default::default(),
         }
+    }
+
+    pub fn update_watch(&mut self, account: AccountIdentifier, balance: Tokens) {
+        self.watch_balances.insert(account, balance);
+    }
+
+    pub fn remove_watch(&mut self, account: AccountIdentifier) {
+        self.watch_balances.remove(&account);
     }
 
     pub async fn balance_of(&self, args: Option<AccountBalanceArgs>) -> CallResult<Tokens> {

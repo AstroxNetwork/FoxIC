@@ -8,6 +8,7 @@ export interface FoxICWallet {
   transaction_fee: Tokens;
   subaccount: [] | [Array<number>];
   ledger_canister: Principal;
+  watch_balances: Array<[Array<number>, Tokens]>;
 }
 export interface HttpRequest {
   url: string;

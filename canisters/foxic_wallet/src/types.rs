@@ -1,4 +1,5 @@
 use ic_cdk::api::*;
+use std::collections::BTreeMap;
 
 use ic_cdk::export::candid::CandidType;
 use ic_ledger_types::{AccountIdentifier, Subaccount, Tokens};
@@ -56,6 +57,7 @@ pub struct FoxICWallet {
     pub ledger_canister: Principal,
     pub subaccount: Option<Subaccount>,
     pub transaction_fee: Tokens,
+    pub watch_balances: BTreeMap<AccountIdentifier, Tokens>,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Clone, Debug, Hash)]

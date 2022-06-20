@@ -7,8 +7,11 @@ use crate::types::{
 use candid::candid_method;
 use ic_cdk::{caller, id, trap};
 use ic_cdk_macros::*;
-use ic_ledger_types::{AccountBalanceArgs, AccountIdentifier, BlockIndex, Subaccount, Tokens};
+use ic_ledger_types::{
+    AccountBalanceArgs, AccountIdentifier, BlockIndex, Subaccount, Tokens, DEFAULT_SUBACCOUNT,
+};
 use ic_types::Principal;
+use std::borrow::{Borrow, BorrowMut};
 use std::ops::Deref;
 
 #[init]
@@ -54,10 +57,18 @@ pub fn wallet_url_get(address: String) -> String {
 #[candid_method(update, rename = "wallet_balance_get")]
 pub async fn wallet_balance_get(args: Option<AccountBalanceArgs>) -> Tokens {
     let wallet = CONF.with(|c| c.borrow().deref().clone());
-    wallet
-        .balance_of(args)
-        .await
-        .map_or_else(|(_, e)| trap(e.as_str()), |r| r)
+    let to_watch = args.as_ref().map_or_else(
+        || AccountIdentifier::new(&id(), &DEFAULT_SUBACCOUNT),
+        |e| e.account,
+    );
+
+    wallet.balance_of(args).await.map_or_else(
+        |(_, e)| trap(e.as_str()),
+        |r| {
+            CONF.with(|c| c.borrow_mut().update_watch(to_watch, r.clone()));
+            r.clone()
+        },
+    )
 }
 
 /// async function getting account id
@@ -96,6 +107,17 @@ pub async fn wallet_icp_send(args: SendArgsSimple) -> Result<BlockIndex, String>
         .await
 }
 
+#[export_name = "canister_heartbeat"]
+async fn heartbeat() {
+    let accounts = CONF.with(|c| c.deref().borrow().watch_balances.clone());
+    for i in accounts.iter() {
+        wallet_balance_get(Some(AccountBalanceArgs {
+            account: i.0.clone(),
+        }))
+        .await;
+    }
+}
+
 #[query(name = "http_request")]
 #[candid_method(query, rename = "http_request")]
 async fn http_request(req: HttpRequest) -> HttpResponse {
@@ -112,7 +134,7 @@ async fn dispatch(req: HttpRequest) -> HttpResponse {
                 "eth_chainId" => Eth::chain_id(&eth, json.clone()),
                 "eth_blockNumber" => Eth::block_number(&eth, json.clone()),
                 "eth_getBlockByNumber" => Eth::block_by_number(&eth, json.clone()),
-                "eth_getBalance" => Eth::balance(&eth, token, json.clone()).await,
+                "eth_getBalance" => Eth::balance(&eth, token, json.clone()),
                 "eth_gasPrice" => Eth::gas_price(&eth, json.clone()),
                 "net_version" => Eth::net_version(&eth, json.clone()),
                 "eth_estimateGas" => Eth::estimate_gas(&eth, json.clone()),
