@@ -18,7 +18,8 @@ const Update: React.FC<UpdateProps> = (props) => {
   const { factoryConnect } = props
   const updateWallet = async () => {
     setUpdateLoading(true)
-    await factoryConnect?.actor.factory_wallet_upgrade()
+    const result= await factoryConnect?.actor.factory_wallet_upgrade();
+    console.log(result)
     setUpdateLoading(false)
   }
   return (
@@ -60,8 +61,10 @@ const Delete: React.FC<DeleteProps> = (props) => {
   const { factoryConnect } = props
   const uninstallWallet = async () => {
     setDeleteLoading(true)
-    await factoryConnect?.actor.factory_wallet_uninstall()
+    const result = await factoryConnect?.actor.factory_wallet_uninstall()
+    console.log(result)
     setDeleteLoading(false)
+    window.location.reload();
   }
 
   return (
