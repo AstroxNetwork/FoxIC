@@ -60,3 +60,6 @@ configs/*.json
 **/yarn.lock
 **/package-lock.json
 **/pnpm-lock.yaml
+
+# sh
+scripts/**/*.sh
