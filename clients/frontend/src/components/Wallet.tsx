@@ -41,7 +41,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
   }, [address])
 
   const send = async () => {
-    if (address && amount) {
+    if (toAddress && amount) {
       setSendLoading(true)
       const result = await walletConnect?.actor.wallet_icp_send({
         account_id: toAddress!,
