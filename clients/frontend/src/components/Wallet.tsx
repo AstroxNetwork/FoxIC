@@ -75,6 +75,10 @@ const Wallet: React.FC<WalletProps> = (props) => {
     await factoryConnect?.actor.factory_wallet_upgrade()
   }
 
+  const uninstallWallet = async () => {
+    await factoryConnect?.actor.factory_wallet_uninstall()
+  }
+
   return (
     <>
       <div className="card">
@@ -123,15 +127,21 @@ const Wallet: React.FC<WalletProps> = (props) => {
           <p style={{ marginTop: 20 }}>Canister ID:</p>
           <p
             className="c_grey"
-            onClick={async () => {
-              updateWallet()
-            }}
+            // onClick={async () => {
+            //   await updateWallet()
+            // }}
           >
             {walletCanister}
           </p>
           <p style={{ marginTop: 20 }}>Controller: </p>
           {walletController?.map((principal) => (
-            <p className="c_grey" key={principal.toText()}>
+            <p
+              className="c_grey"
+              key={principal.toText()}
+              // onClick={async () => {
+              //   await uninstallWallet()
+              // }}
+            >
               {principal.toText()}
             </p>
           ))}
