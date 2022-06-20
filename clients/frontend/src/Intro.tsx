@@ -20,7 +20,7 @@ export function Intro() {
       setInstalled(false)
     } else {
       setInstalled(true)
-      setIdentity(await installResult.snap?.createSnapIdentity())
+      setIdentity(installResult.identity!)
     }
   }, [])
 
