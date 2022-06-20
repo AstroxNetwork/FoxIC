@@ -123,9 +123,9 @@ const Wallet: React.FC<WalletProps> = (props) => {
           <p style={{ marginTop: 20 }}>Canister ID:</p>
           <p
             className="c_grey"
-            // onClick={async () => {
-            //   updateWallet()
-            // }}
+            onClick={async () => {
+              updateWallet()
+            }}
           >
             {walletCanister}
           </p>
