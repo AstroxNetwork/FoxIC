@@ -5,7 +5,7 @@ use crate::types::{
     SendArgsSimple, TransferArgs,
 };
 use candid::candid_method;
-use ic_cdk::{caller, id, trap};
+use ic_cdk::{api, caller, id, trap};
 use ic_cdk_macros::*;
 use ic_ledger_types::{
     AccountBalanceArgs, AccountIdentifier, BlockIndex, Subaccount, Tokens, DEFAULT_SUBACCOUNT,
@@ -105,6 +105,13 @@ pub async fn wallet_icp_send(args: SendArgsSimple) -> Result<BlockIndex, String>
             account_id: AccountIdentifier::try_from(v8).unwrap(),
         })
         .await
+}
+
+/// async function getting account id
+#[update(name = "cycle_balance")]
+#[candid_method(update, rename = "cycle_balance")]
+pub fn cycle_balance() -> u128 {
+    api::canister_balance128()
 }
 
 #[heartbeat]

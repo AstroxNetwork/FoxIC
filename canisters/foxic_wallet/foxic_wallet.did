@@ -26,6 +26,7 @@ type TransferArgs = record {
   amount : Tokens;
 };
 service : () -> {
+  cycle_balance : () -> (nat);
   get_owner : () -> (text) query;
   http_request : (HttpRequest) -> (HttpResponse) query;
   is_owner : () -> (bool) query;
