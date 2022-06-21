@@ -97,7 +97,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
         <div>
           <img src={LOGO} style={{ width: 92, height: 26 }} alt="" />
           <p style={{ color: "#B0B0B0" }}>
-            MetaMask Flask wallet that allows you to send ICP and sign messages.
+            MetaMask Flask allows you to sign messages.
           </p>
         </div>
       </div>
@@ -144,7 +144,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
           </div>
         ) : (
           <div style={{ width: 400 }}>
-            <h1>Use MetaMask Flask to create Identity.</h1>
+            <h1>Use MetaMask Flask to create SmartContract Wallet</h1>
             <a className="button-primary" onClick={create}>
               Create
             </a>

@@ -18,7 +18,7 @@ const Update: React.FC<UpdateProps> = (props) => {
   const { factoryConnect } = props
   const updateWallet = async () => {
     setUpdateLoading(true)
-    const result= await factoryConnect?.actor.factory_wallet_upgrade();
+    const result = await factoryConnect?.actor.factory_wallet_upgrade()
     console.log(result)
     setUpdateLoading(false)
   }
@@ -34,7 +34,7 @@ const Update: React.FC<UpdateProps> = (props) => {
         }`}
         onClick={updateWallet}
       >
-        { updateLoading ? 'Update...': 'Update'}
+        {updateLoading ? "Update..." : "Update"}
       </a>
       <p
         style={{
@@ -64,7 +64,7 @@ const Delete: React.FC<DeleteProps> = (props) => {
     const result = await factoryConnect?.actor.factory_wallet_uninstall()
     console.log(result)
     setDeleteLoading(false)
-    window.location.reload();
+    window.location.reload()
   }
 
   return (
@@ -85,7 +85,7 @@ const Delete: React.FC<DeleteProps> = (props) => {
         }`}
         onClick={uninstallWallet}
       >
-        {deleteLoading ? 'Deleting...': 'Delete'}
+        {deleteLoading ? "Deleting..." : "Delete"}
       </a>
       <p
         style={{
@@ -178,10 +178,10 @@ const Setting: React.FC<SettingProps> = (props) => {
           <p style={{ color: "#9C9CA4" }}>Block Explorer URL: (Optional)</p>
         </div>
         <div className="flex-3">
-          <p>FOXICNETWORK</p>
+          <p>https://ip5qp-gaaaa-aaaah-ablla-cai.ic0.app/</p>
         </div>
         <Copy
-          text="FOXICNETWORK"
+          text="https://ip5qp-gaaaa-aaaah-ablla-cai.ic0.app/"
           content={<img src={COPY} style={{ width: 20, height: 20 }} />}
         />
       </div>
@@ -367,14 +367,16 @@ const Wallet: React.FC<WalletProps> = (props) => {
               <img src={DELETE} style={{ width: 20, height: 20 }} />
             </a>
           </div>
+
           <a
+            className={`button-primary button-block`}
+            style={{ marginTop: 20 }}
             onClick={() => {
               setModalType("setting")
               setVisibleCode(true)
             }}
-            className="mg_t_20"
           >
-            <h2>Setting MetaMask</h2>
+            Configure your MetaMask
           </a>
           {/* <p style={{ marginTop: 50 }}>wallet detail url:</p>
           <div className="flex">
