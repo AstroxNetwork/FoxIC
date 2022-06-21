@@ -54,6 +54,9 @@ export const Waring: React.FC<WarningProps> = (props) => {
         <a href="https://discord.gg/QgEGGZN6rp">
           https://discord.gg/QgEGGZN6rp
         </a>{" "}
+       
+      </p>
+      <p className="mg_b_10">
         or raise an issue on Github:
         <a href="https://github.com/AstroxNetwork/FoxIC">
           https://github.com/AstroxNetwork/FoxIC
