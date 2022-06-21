@@ -113,8 +113,10 @@ const Setting: React.FC<SettingProps> = (props) => {
     <>
       <h2 className="mg_b_10">1.Set up MetaMask Flask</h2>
       <p className="mg_b_10">
-        Notice: Please turn off your MetaMask<img src={METAMASK} style={{margin: '0 5px', width: 20, height: 20}} /> before you
-        use MetaMask Flask<img src={ICON_METAMASK_FLASH} style={{margin: '0 5px', width: 20, height: 20}} />.
+        Please ensure MetaMask Flask <img src={ICON_METAMASK_FLASH} style={{margin: '0 5px', width: 20, height: 20}} /> is installed.
+      </p>
+      <p className="mg_b_10">
+        Please turn off your MetaMask <img src={METAMASK} style={{margin: '0 5px', width: 20, height: 20}} /> before run.
       </p>
       <a
         style={{ marginBottom: 30 }}
