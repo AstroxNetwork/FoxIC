@@ -4,7 +4,16 @@ import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
 import { _SERVICE as factory_SERVICE } from "../candid/foxic_factory"
 import { CreateActorResult } from "../services/connection"
 import QrCode from "qrcode.react"
-import { CODE, COPY, DELETE, METAMASK, ICON_METAMASK_FLASH, REFRESH, UPDATE } from "../utils/resCont"
+import {
+  CODE,
+  COPY,
+  DELETE,
+  METAMASK,
+  ICON_METAMASK_FLASH,
+  REFRESH,
+  UPDATE,
+  TIPS,
+} from "../utils/resCont"
 import Copy from "./Copy"
 import { balanceFromString, balanceToString } from "../utils/converter"
 import { METAMASK_FLASK } from "../config"
@@ -111,7 +120,7 @@ const Setting: React.FC<SettingProps> = (props) => {
   const { walletDetailUrl } = props
   return (
     <>
-      <h2 className="mg_b_10">1.Set up MetaMask Flask</h2>
+      {/* <h2 className="mg_b_10">1.Set up MetaMask Flask</h2>
       <p className="mg_b_10">
         Please ensure MetaMask Flask <img src={ICON_METAMASK_FLASH} style={{margin: '0 5px', width: 20, height: 20}} /> is installed.
       </p>
@@ -125,8 +134,8 @@ const Setting: React.FC<SettingProps> = (props) => {
         target="_blank"
       >
         Install
-      </a>
-      <h2 className="mg_b10">2. Add Network.</h2>
+      </a> */}
+      <h2 className="mg_b_20">Configure Your Metamask</h2>
       <div className="flex mg_b_20">
         <div className="flex-2">
           <p style={{ color: "#9C9CA4" }}>Network Name:</p>
@@ -198,6 +207,29 @@ const Setting: React.FC<SettingProps> = (props) => {
   )
 }
 
+type CycleWarningProps = {
+  onClose: () => void
+}
+const CycleWarning: React.FC<CycleWarningProps> = (props) => {
+  return (
+    <>
+      <h2 className="mg_b_20">Low cycles balance</h2>
+      <p>
+        The cycles balance of your canister is now very low. Please top up as
+        soon as possible, otherwise your wallet will be unavailable after the
+        balance reaches 0 and the canister will be automatically deleted soon.
+      </p>
+      <a
+        className={`button-primary button-block`}
+        style={{ marginTop: 50 }}
+        onClick={props.onClose}
+      >
+        Close
+      </a>
+    </>
+  )
+}
+
 type WalletProps = {
   walletCanister: string
   walletController: [Principal] | []
@@ -211,10 +243,11 @@ const Wallet: React.FC<WalletProps> = (props) => {
   const [toAddress, setToAddress] = useState<string | undefined>()
   const [amount, setAmount] = useState<string | undefined>()
   const [balance, setBalance] = useState<bigint | undefined>()
+  const [cycles, setCycles] = useState<bigint | undefined>()
   const [walletDetailUrl, setWalletDetailUrl] = useState("")
   const [visibleCode, setVisibleCode] = useState(false)
   const [modalType, setModalType] = useState<
-    "update" | "delete" | "code" | "setting"
+    "update" | "delete" | "code" | "setting" | "cycleWaring"
   >("code")
   const [sendLoading, setSendLoading] = useState(false)
   const [refreshLoading, setRefreshLoading] = useState(false)
@@ -230,6 +263,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
     if (address) {
       getWalletUrl()
       getBalance()
+      getCycleBalance()
     }
   }, [address])
 
@@ -266,6 +300,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
 
   const getCycleBalance = async () => {
     const result = await walletConnect?.actor.cycle_balance()
+    setCycles(result)
     console.log(result)
   }
 
@@ -314,7 +349,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
       <div className="card">
         <h2>Wallet details</h2>
         <div className="flex flex-column">
-          <div className="flex between" style={{ marginTop: 20 }}>
+          <div className="flex  mg_b_10 between" style={{ marginTop: 20 }}>
             <div className="flex-1">
               <p>Canister ID:</p>
               <p className="c_grey">{walletCanister}</p>
@@ -327,6 +362,18 @@ const Wallet: React.FC<WalletProps> = (props) => {
             >
               <img src={UPDATE} style={{ width: 20 }} />
             </a>
+          </div>
+          <div className="flex">
+            <p className="c_grey">
+              Cycles:{" "}
+              <strong className="c_brand">
+                {cycles !== undefined ? balanceToString(cycles).total : "0"} T
+              </strong>
+            </p>
+            <img src={TIPS} style={{ marginLeft: 10, width: 20, height: 20 }} onClick={() => {
+              setModalType("cycleWaring")
+              setVisibleCode(true)
+            }} />
           </div>
 
           <p style={{ marginTop: 20 }}>Controller: </p>
@@ -406,7 +453,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
       <div className={`modal ${visibleCode ? "show" : ""}`}>
         <div
           className={`modal-content ${
-            modalType === "setting" ? "modal-big" : ""
+            modalType === "setting" || modalType === "cycleWaring" ? "modal-big" : ""
           }`}
         >
           {modalType === "code" ? (
@@ -446,7 +493,11 @@ const Wallet: React.FC<WalletProps> = (props) => {
               walletDetailUrl={walletDetailUrl}
               onClose={() => setVisibleCode(false)}
             />
-          ) : null}
+          ) : modalType === "cycleWaring" ?(
+            <CycleWarning onClose={() => setVisibleCode(false)} />
+          ):  null}
+
+
         </div>
       </div>
     </>
