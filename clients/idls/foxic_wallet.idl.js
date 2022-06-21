@@ -30,6 +30,7 @@ export const idlFactory = ({ IDL }) => {
     amount: Tokens,
   });
   return IDL.Service({
+    cycle_balance: IDL.Func([], [IDL.Nat], []),
     get_owner: IDL.Func([], [IDL.Text], ['query']),
     http_request: IDL.Func([HttpRequest], [HttpResponse], ['query']),
     is_owner: IDL.Func([], [IDL.Bool], ['query']),

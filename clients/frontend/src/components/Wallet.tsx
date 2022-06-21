@@ -262,6 +262,11 @@ const Wallet: React.FC<WalletProps> = (props) => {
     }
   }
 
+  const getCycleBalance = async () => {
+    const result = await walletConnect?.actor.cycle_balance()
+    console.log(result)
+  }
+
   return (
     <>
       <div className="card">

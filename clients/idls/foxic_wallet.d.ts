@@ -36,6 +36,7 @@ export interface TransferArgs {
   amount: Tokens;
 }
 export interface _SERVICE {
+  cycle_balance: ActorMethod<[], bigint>;
   get_owner: ActorMethod<[], string>;
   http_request: ActorMethod<[HttpRequest], HttpResponse>;
   is_owner: ActorMethod<[], boolean>;
