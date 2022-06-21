@@ -4,6 +4,7 @@ import FOX from "../assets/fox.png"
 import FOX_ANIMATE from "../assets/FOXIC.json"
 import Lottie from "react-lottie"
 import { METAMASK_FLASK } from "../config"
+import { ICON_METAMASK_FLASH } from "../utils/resCont"
 
 const defaultOptions = {
   loop: true,
@@ -21,7 +22,7 @@ const Install = (props) => {
         <img src={LOGO} alt="" />
         <div className="flex flex-1 justify-end align-items-center">
           <p>
-            Please ensure you have Metamask Flask<br></br> Installed for this
+            Please ensure you have Metamask Flask<img src={ICON_METAMASK_FLASH} style={{margin: '0 5px', width: 20, height: 20}} /><br></br> Installed for this
             example.Click here to install.
           </p>
           <a href={METAMASK_FLASK} className="button-default" target="_blank">

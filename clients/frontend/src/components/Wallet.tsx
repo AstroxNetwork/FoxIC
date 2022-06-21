@@ -4,7 +4,7 @@ import { _SERVICE as wallet_SERVICE } from "../candid/foxic_wallet"
 import { _SERVICE as factory_SERVICE } from "../candid/foxic_factory"
 import { CreateActorResult } from "../services/connection"
 import QrCode from "qrcode.react"
-import { CODE, COPY, DELETE, REFRESH, UPDATE } from "../utils/resCont"
+import { CODE, COPY, DELETE, METAMASK, ICON_METAMASK_FLASH, REFRESH, UPDATE } from "../utils/resCont"
 import Copy from "./Copy"
 import { balanceFromString, balanceToString } from "../utils/converter"
 import { METAMASK_FLASK } from "../config"
@@ -113,8 +113,8 @@ const Setting: React.FC<SettingProps> = (props) => {
     <>
       <h2 className="mg_b_10">1.Set up MetaMask Flask</h2>
       <p className="mg_b_10">
-        Notice: Please turn off your MetaMask<span>(Orange)</span> before you
-        use MeataMask Flask<span style={{ color: "" }}>(Purple)</span>.
+        Notice: Please turn off your MetaMask<img src={METAMASK} style={{margin: '0 5px', width: 20, height: 20}} /> before you
+        use MetaMask Flask<img src={ICON_METAMASK_FLASH} style={{margin: '0 5px', width: 20, height: 20}} />.
       </p>
       <a
         style={{ marginBottom: 30 }}
@@ -323,7 +323,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
                 setVisibleCode(true)
               }}
             >
-              <img src={UPDATE} style={{ width: 20, height: 20 }} />
+              <img src={UPDATE} style={{ width: 20 }} />
             </a>
           </div>
 
