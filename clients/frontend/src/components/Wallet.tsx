@@ -8,8 +8,8 @@ import {
   CODE,
   COPY,
   DELETE,
-  METAMASK,
-  ICON_METAMASK_FLASH,
+  // METAMASK,
+  // ICON_METAMASK_FLASH,
   REFRESH,
   UPDATE,
   TIPS,
@@ -367,13 +367,18 @@ const Wallet: React.FC<WalletProps> = (props) => {
             <p className="c_grey">
               Cycles:{" "}
               <strong className="c_brand">
-                {cycles !== undefined ? balanceToString(cycles).total : "0"} T
+                {cycles !== undefined ? balanceToString(cycles, 12).total : "0"}{" "}
+                T
               </strong>
             </p>
-            <img src={TIPS} style={{ marginLeft: 10, width: 20, height: 20 }} onClick={() => {
-              setModalType("cycleWaring")
-              setVisibleCode(true)
-            }} />
+            <img
+              src={TIPS}
+              style={{ marginLeft: 10, width: 20, height: 20 }}
+              onClick={() => {
+                setModalType("cycleWaring")
+                setVisibleCode(true)
+              }}
+            />
           </div>
 
           <p style={{ marginTop: 20 }}>Controller: </p>
@@ -453,7 +458,9 @@ const Wallet: React.FC<WalletProps> = (props) => {
       <div className={`modal ${visibleCode ? "show" : ""}`}>
         <div
           className={`modal-content ${
-            modalType === "setting" || modalType === "cycleWaring" ? "modal-big" : ""
+            modalType === "setting" || modalType === "cycleWaring"
+              ? "modal-big"
+              : ""
           }`}
         >
           {modalType === "code" ? (
@@ -493,11 +500,9 @@ const Wallet: React.FC<WalletProps> = (props) => {
               walletDetailUrl={walletDetailUrl}
               onClose={() => setVisibleCode(false)}
             />
-          ) : modalType === "cycleWaring" ?(
+          ) : modalType === "cycleWaring" ? (
             <CycleWarning onClose={() => setVisibleCode(false)} />
-          ):  null}
-
-
+          ) : null}
         </div>
       </div>
     </>
