@@ -1,5 +1,7 @@
 # FoxIC
 
+![avatar](/assets/cover.jpg)
+
 ## Inspiration
 People love and hate MetaMask so much, because it is so popular and have tremendous fans. We have Internet-Identity on IC, and many other wallets, but none of them are popular than the little Fox on the browser. 
 
