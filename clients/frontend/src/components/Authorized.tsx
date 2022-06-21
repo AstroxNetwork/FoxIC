@@ -20,6 +20,54 @@ const defaultOptions = {
     preserveAspectRatio: "xMidYMid slice",
   },
 }
+
+type WarningProps = {
+  onClose: () => void
+}
+
+export const Waring: React.FC<WarningProps> = (props) => {
+  return (
+    <>
+      <h2 className="mg_b_20">Risk Warning</h2>
+      <p className="mg_b_10">
+        Alpha releases are primarily intended for development and testing of
+        feature changes. Alpha releases are by nature not intended for general
+        use, as we will continue to introduce new features and maintain them,
+        and there is also the possibility of introducing defects into the
+        application during the software development process.
+      </p>
+      <p className="mg_b_10">
+        The Alpha version includes ICP transaction features. Please{" "}
+        <strong className="strong">DO NOT</strong>
+        {" "}transfer large amounts of ICP or any NFT to any wallets displayed and
+        use this feature <strong className="strong">AT YOUR OWN RISK.</strong>
+      </p>
+      <p className="mg_b_10">
+        Please{" "}
+        <strong className="strong">
+          KEEP YOUR OWN METAMASK AND SEED PHRASE SAFE!
+        </strong>
+      </p>
+      <p className="mg_b_10">
+        If you encounter any problems, please join us on Discord to communicate
+        with us:{" "}
+        <a href="https://discord.gg/QgEGGZN6rp">
+          https://discord.gg/QgEGGZN6rp
+        </a>{" "}
+        or raise an issue on Github:
+        <a href="https://github.com/AstroxNetwork/FoxIC">
+          https://github.com/AstroxNetwork/FoxIC
+        </a>
+      </p>
+      <div className="flex justify-between" style={{ marginTop: 50 }}>
+        <a className={`button-primary button-block`} onClick={props.onClose}>
+          Accept & continue
+        </a>
+      </div>
+    </>
+  )
+}
+
 type AuthorizedProps = {
   identity: SnapIdentity
   // api: ICPSnapApi
@@ -37,6 +85,7 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
   const [walletConnect, setWalletConnect] =
     useState<CreateActorResult<wallet_SERVICE>>()
   const [createLoading, setCreateLoading] = useState(false)
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     initWallet()
@@ -150,6 +199,11 @@ const Authorized: React.FC<AuthorizedProps> = (props) => {
             </a>
           </div>
         )}
+      </div>
+      <div className={`modal ${visible ? "show" : ""}`}>
+        <div className={`modal-content modal-big`}>
+          <Waring onClose={() => setVisible(false)} />
+        </div>
       </div>
     </div>
   )
