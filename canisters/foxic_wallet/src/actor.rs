@@ -114,16 +114,16 @@ pub fn cycle_balance() -> u128 {
     api::canister_balance128()
 }
 
-#[heartbeat]
-async fn heartbeat() {
-    let accounts = CONF.with(|c| c.deref().borrow().watch_balances.clone());
-    for i in accounts.iter() {
-        wallet_balance_get(Some(AccountBalanceArgs {
-            account: i.0.clone(),
-        }))
-        .await;
-    }
-}
+// #[heartbeat]
+// async fn heartbeat() {
+//     let accounts = CONF.with(|c| c.deref().borrow().watch_balances.clone());
+//     for i in accounts.iter() {
+//         wallet_balance_get(Some(AccountBalanceArgs {
+//             account: i.0.clone(),
+//         }))
+//         .await;
+//     }
+// }
 
 #[query(name = "http_request")]
 #[candid_method(query, rename = "http_request")]

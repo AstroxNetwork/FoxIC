@@ -118,17 +118,18 @@ async fn _upgrade_wallet(canister_id: &Principal, wasm_module: Vec<u8>) -> Resul
         arg: b" ".to_vec(),
     };
 
-    match api::call::call(
+    match api::call::call_with_payment128(
         Principal::management_canister(),
         "install_code",
         (install_config,),
+        200_000_000_000,
     )
     .await
     {
         Ok(x) => x,
         Err((code, msg)) => {
             return Err(format!(
-                "An error happened during the _install_wallet: {}: {}",
+                "An error happened during the _update_wallet: {}: {}",
                 code as u8, msg
             ));
         }
@@ -176,7 +177,7 @@ impl FoxICFactory {
             ic_cdk::trap("Each caller can only have one wallet, Truly Sorry!!");
         }
 
-        let default_cycles = 200_000_000_000 as u128;
+        let default_cycles = 800_000_000_000 as u128;
         let create_canister_arg = CreateCanisterArgs {
             cycles: request.cycles.unwrap_or(default_cycles).clone() as u128,
             settings: CanisterSettings {
