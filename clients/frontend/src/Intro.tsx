@@ -19,7 +19,7 @@ export function Intro() {
     if (!installResult.isSnapInstalled) {
       setInstalled(false)
     } else {
-      // setInstalled(true)
+      setInstalled(true)
       setIdentity(installResult.identity!)
     }
   }, [])
