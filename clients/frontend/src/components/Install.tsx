@@ -109,7 +109,7 @@ const InstallModal = (props) => {
 }
 
 const Install = (props) => {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   return (
     <div className="container">
       <div className="header">
