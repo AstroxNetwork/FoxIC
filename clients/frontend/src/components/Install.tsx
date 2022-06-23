@@ -77,7 +77,7 @@ const InstallModal = (props) => {
                 alt=""
                 style={{ width: 32, height: 30 }}
               />
-              <p>Turn off your </p>
+              <p>Turn on your </p>
             </div>
             <div>
               <p style={{ textAlign: "left" }}>
