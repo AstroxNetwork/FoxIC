@@ -1,9 +1,9 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@astrox/icsnap': ^0.0.6
-  '@astrox/icsnap-adapter': ^0.0.6
-  '@astrox/icsnap-types': ^0.0.6
+  '@astrox/icsnap': ^0.0.12
+  '@astrox/icsnap-adapter': ^0.0.12
+  '@astrox/icsnap-types': ^0.0.12
   '@dfinity/agent': 0.11.3
   '@dfinity/auth-client': 0.11.3
   '@dfinity/authentication': 0.11.3
@@ -18,17 +18,19 @@ specifiers:
   less: ^4.1.3
   prettier: ^2.7.1
   prop-types: ^15.8.1
+  qrcode.react: ^1.0.1
   react: ^17.0.2
   react-dom: ^17.0.2
   react-lottie: ^1.2.3
+  react-use-copy-to-clipboard: 1.0.1
   tslib: ^2.3.1
   typescript: ^4.4.3
   vite: ^2.5.7
 
 dependencies:
-  '@astrox/icsnap': 0.0.6_5iahy3vddexsutqu7rhq6fljva
-  '@astrox/icsnap-adapter': 0.0.6_@dfinity+principal@0.11.3
-  '@astrox/icsnap-types': 0.0.6_wawblomcvhmv3443rgtlt7dsiu
+  '@astrox/icsnap': 0.0.12_5iahy3vddexsutqu7rhq6fljva
+  '@astrox/icsnap-adapter': 0.0.12_@dfinity+principal@0.11.3
+  '@astrox/icsnap-types': 0.0.12_wawblomcvhmv3443rgtlt7dsiu
   '@dfinity/agent': 0.11.3_urfyxkqvy2mysslkeyxo7ugw34
   '@dfinity/auth-client': 0.11.3_lq56g5qkvqzaome2tk7y6wrn4a
   '@dfinity/authentication': 0.11.3_ulvvt5frrn347vysvfuiycyhqq
@@ -37,9 +39,11 @@ dependencies:
   '@dfinity/principal': 0.11.3
   prettier: 2.7.1
   prop-types: 15.8.1
+  qrcode.react: 1.0.1_react@17.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-lottie: 1.2.3_react@17.0.2
+  react-use-copy-to-clipboard: 1.0.1_react@17.0.2
   tslib: 2.4.0
 
 devDependencies:
@@ -61,10 +65,10 @@ packages:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.13
 
-  /@astrox/icsnap-adapter/0.0.6_@dfinity+principal@0.11.3:
-    resolution: {integrity: sha512-Qv62TyO46wEjaw3O4QmwY3E1TPtdmNlB7O/Pv96nyRAEnZmJ5XaNZvwegB263Ks4Sr598n/KyYK319YjvoXPWg==}
+  /@astrox/icsnap-adapter/0.0.12_@dfinity+principal@0.11.3:
+    resolution: {integrity: sha512-S+CxWGie+8TY74ti/iAC0upoq099lHhoO/fr5wOnWA7B90z5AEBWABe2zvKQ12oeM0Q6LCopDFs3RMsob9PeTQ==}
     dependencies:
-      '@astrox/icsnap-types': 0.0.6_wawblomcvhmv3443rgtlt7dsiu
+      '@astrox/icsnap-types': 0.0.12_wawblomcvhmv3443rgtlt7dsiu
       '@dfinity/agent': 0.11.3_urfyxkqvy2mysslkeyxo7ugw34
       '@dfinity/candid': 0.11.3
       '@dfinity/identity': 0.11.3_wawblomcvhmv3443rgtlt7dsiu
@@ -72,8 +76,8 @@ packages:
       - '@dfinity/principal'
     dev: false
 
-  /@astrox/icsnap-types/0.0.6_wawblomcvhmv3443rgtlt7dsiu:
-    resolution: {integrity: sha512-cIntHQ8Z9Hz0iQwHrtDpdZ7PWxs70gZhF6r0poYoUh7g4a3VhPOrUkqvIgJCtudeEc8mMwtELFkbGqPaiFRQPA==}
+  /@astrox/icsnap-types/0.0.12_wawblomcvhmv3443rgtlt7dsiu:
+    resolution: {integrity: sha512-JuBSI7WyazzmecEp9r1wU/17ns9aU3egGCmjjjuIT/huc27APYmXX2FiuZc+QvZ/iL40ATj+Tzb7kj2WwEUAHg==}
     dependencies:
       '@dfinity/identity': 0.11.3_wawblomcvhmv3443rgtlt7dsiu
     transitivePeerDependencies:
@@ -81,10 +85,10 @@ packages:
       - '@dfinity/principal'
     dev: false
 
-  /@astrox/icsnap/0.0.6_5iahy3vddexsutqu7rhq6fljva:
-    resolution: {integrity: sha512-cPn0zh4Lln8ihEnHQcevk1Jmb0KXhVPIw3Vq9q5MfYgOYPtIrg/aIum6OEmm4d+l3ZcB6VcDYb4RlafPycnAjA==}
+  /@astrox/icsnap/0.0.12_5iahy3vddexsutqu7rhq6fljva:
+    resolution: {integrity: sha512-BR1VROg4RT4r5zzp/uxD7CiPB3SBeKURWd+0MWE4Q7cgLDiIBkIAR+89QEj1LgtDXpQe+e6TSrExet2O1+hc/A==}
     dependencies:
-      '@astrox/icsnap-types': 0.0.6_wawblomcvhmv3443rgtlt7dsiu
+      '@astrox/icsnap-types': 0.0.12_wawblomcvhmv3443rgtlt7dsiu
       '@dfinity/agent': 0.11.3_urfyxkqvy2mysslkeyxo7ugw34
       '@dfinity/candid': 0.11.3
       '@dfinity/identity': 0.11.3_wawblomcvhmv3443rgtlt7dsiu
@@ -2370,7 +2374,7 @@ packages:
     dev: false
 
   /bn.js/4.11.6:
-    resolution: {integrity: sha512-XWwnNNFCuuSQ0m3r3C4LE3EiORltHd9M05pq6FOlVeiophzRbMo50Sbz1ehl8K3Z+jw9+vmgnXefY1hz8X+2wA==}
+    resolution: {integrity: sha1-UzRK2xRhehP26N0s4okF0cC6MhU=}
     dev: false
 
   /bn.js/4.12.0:
@@ -5130,6 +5134,21 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /qr.js/0.0.0:
+    resolution: {integrity: sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==}
+    dev: false
+
+  /qrcode.react/1.0.1_react@17.0.2:
+    resolution: {integrity: sha512-8d3Tackk8IRLXTo67Y+c1rpaiXjoz/Dd2HpcMdW//62/x8J1Nbho14Kh8x974t9prsLHN6XqVgcnRiBGFptQmg==}
+    peerDependencies:
+      react: ^15.5.3 || ^16.0.0 || ^17.0.0
+    dependencies:
+      loose-envify: 1.4.0
+      prop-types: 15.8.1
+      qr.js: 0.0.0
+      react: 17.0.2
+    dev: false
+
   /qs/6.5.3:
     resolution: {integrity: sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==}
     engines: {node: '>=0.6'}
@@ -5194,6 +5213,15 @@ packages:
     resolution: {integrity: sha512-PgidR3wST3dDYKr6b4pJoqQFpPGNKDSCDx4cZoshjXipw3LzO7mG1My2pwEzz2JVkF+inx3xRpDeQLFQGH/hsQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /react-use-copy-to-clipboard/1.0.1_react@17.0.2:
+    resolution: {integrity: sha512-+HhdVdt6V0nGb1VSmlxt+/5B0tcgD5+2PrtYucSfVoNwUi3QfGSZlAZTFOSVJ+dpM/64v3iEOkvN5f1DYwkJ7Q==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: ^16.9.0
+    dependencies:
+      react: 17.0.2
+    dev: false
 
   /react/17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
@@ -6223,7 +6251,7 @@ packages:
     dev: false
 
   github.com/frozeman/bignumber.js-nolookahead/57692b3ecfc98bbdd6b3a516cb2353652ea49934:
-    resolution: {commit: 57692b3ecfc98bbdd6b3a516cb2353652ea49934, repo: git+ssh://git@github.com/frozeman/bignumber.js-nolookahead.git, type: git}
+    resolution: {tarball: https://codeload.github.com/frozeman/bignumber.js-nolookahead/tar.gz/57692b3ecfc98bbdd6b3a516cb2353652ea49934}
     name: bignumber.js
     version: 2.0.7
     dev: false

@@ -16,7 +16,7 @@ export const config = <Canisters>[
     package: 'foxic_wallet',
     bin_name: 'foxic_wallet',
     config: './configs/foxic_wallet.json',
-    no_deploy: true,
+    no_deploy: false,
   },
   {
     category: 'canisters',
